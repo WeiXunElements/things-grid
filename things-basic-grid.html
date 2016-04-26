@@ -1,0 +1,190 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../../bower_components/paper-toolbar/paper-toolbar.html">
+
+<link rel="import" href="../things-button/things-button-group.html">
+<link rel="import" href="../things-button/things-button-bar.html">
+
+<link rel="import" href="../things-grid-behavior/things-grid-config-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-pagination-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-export-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-import-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-addrow-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-soft-deleterow-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-save-behavior.html">
+
+<!--
+기본 그리드. 기본 리소스 그리드는 기본 GridBehavior(Things.GridConfigBehavior)만 
+mixin 하고 있어서 그리드에 데이터만 표시하는데 사용된다. 
+
+	Example:
+
+    <things-ajax 
+      auto
+      resource-url="diy_services/ElidomGridModel/query.json" 
+      method="GET"
+      last-response="{{gridModel}}">
+    </things-ajax>
+
+    <things-ajax 
+      auto
+      resource-url="diy_services/ElidomGridColumn/query.json" 
+      method="GET"
+      last-response="{{gridColumns}}">
+    </things-ajax>
+
+    <things-ajax 
+      id="search-resource"
+      resource-url="terminologies" 
+      resource-action="index"
+      last-response="{{data}}">
+    </things-ajax>
+
+    <things-basic-grid 
+      id="grid"
+      model="[[gridModel]]" 
+      columns="[[gridColumns]]" 
+      data="[[data]]"
+    </things-basic-grid>	
+
+@demo ./things-grid/demo/demo-things-basic-grid.html
+-->
+
+<dom-module id="things-basic-grid">
+	<template>
+		<style>
+			:host {
+				display: block;
+				height: 100%;
+				width: 100%;
+			}
+
+			:host paper-material {
+				padding: 10px;
+			}
+
+			:host paper-toolbar {
+				padding: 10px 0px 0px 0px;
+			}
+
+			paper-toolbar.white {
+				--paper-toolbar-background: white;
+				--paper-toolbar-title: {
+					font-style: italic;
+					font-weight: bold;
+				};
+			}			
+		</style>
+	
+		<paper-material elevation="1" class="flex">
+			<div id="{{gridContainerId}}"></div>
+		
+			<paper-toolbar class="white" hidden$="{{!enableToolbar}}">
+				<!-- paginator -->
+				<div id="toolbar-middle-div" class="middle fit"></div>
+
+				<!-- button group -->
+				<div id="toolbar-bottom-div" class="bottom fit">					
+					<things-button-bar id="button-group" buttons="{{buttons}}"></things-button-bar>
+				</div>
+			</paper-toolbar>
+		</paper-material>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'things-basic-grid',
+
+			behaviors: [
+				Things.GridConfigBehavior
+			],
+	
+			properties: {
+
+				/**
+			   * Button Group에 표시될 버튼 정보
+			   */
+				buttons : {
+					type: Array,
+					value: function() {
+						return [];
+					}
+				}
+			},
+
+			listeners: {
+				'things-grid-configure-failed' : '_gridConfigureFailed'
+			},
+
+			observers: [
+				'_toolbarConfigChanged(paginatable, buttons)'
+			],
+
+			/**
+			 * Life Cycle 
+			 */
+			/*_buttonsChanged: function() {
+				if(this.paginatable) {
+					this.behaviors.push(Things.GridPaginationBehavior);
+					this._mixinBehavior(Things.GridPaginationBehavior);
+				}
+
+				if(!this.buttons || this.buttons.length <= 0) {
+					return;
+				}
+
+				var enableImport = this.buttons.filter(function(button) { return button.id == 'import-btn'; });
+				if(enableImport && enableImport.length > 0) {
+					this._mixinBehavior(Things.GridImportBehavior);
+					this.initImportBehavior();
+				}
+
+				var enableExport = this.buttons.filter(function(button) { return button.id == 'export-btn'; });
+				if(enableExport && enableExport.length > 0) {
+					this._mixinBehavior(Things.GridExportBehavior);
+					this.initExportBehavior();
+				}
+
+				var enableAdd = this.buttons.filter(function(button) { return button.id == 'add-btn'; });
+				if(enableAdd && enableAdd.length > 0) {
+					this._mixinBehavior(Things.GridAddrowBehavior);
+					this.initAddrowBehavior();
+				}
+
+				var enableDelete = this.buttons.filter(function(button) { return button.id == 'delete-btn'; });
+				if(enableDelete && enableDelete.length > 0) {
+					this._mixinBehavior(Things.GridSoftDeleterowBehavior);
+					this.initSoftDeleterowBehavior();
+				}
+
+				var enableSave = this.buttons.filter(function(button) { return button.id == 'save-btn'; });
+				if(enableSave && enableSave.length > 0) {
+					this._mixinBehavior(Things.GridSaveBehavior);
+					this.initSaveBehavior();
+				}
+			},*/
+
+			/**
+			 * 툴바 관련 설정 변경시 
+			 *
+			 * @param {Boolean} paginatable
+			 * @param {Array} buttons
+			 */
+			_toolbarConfigChanged: function(paginatable, buttons) {
+				this.enableToolbar = (paginatable || (buttons && buttons.length > 0));
+			},
+
+			/**
+			 * Grid 구성이 실패한 후 핸들러
+			 * 
+			 * @param {Object} event things-grid-configure-failed
+			 */
+			_gridConfigureFailed: function(event) {
+				var title = 'Grid Configuration Error';
+				var text = 'Error : ' + event.detail.error;
+				this.openInfoMsg({ type : 'error', title : title, text : text });
+			}			
+
+		});
+	</script>
+</dom-module>

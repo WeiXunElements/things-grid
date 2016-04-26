@@ -1,0 +1,151 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-material/paper-material.html">
+
+<link rel="import" href="../things-grid-behavior/things-grid-config-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-export-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-import-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-save-behavior.html">
+
+<!--
+서버에서 관리하는 DiyGrid 정보를 조회해서 그리드를 구성하는 동적 그리드. 
+
+	Example:
+
+	  <things-diy-grid diy-grid-id="1">
+	  </things-diy-grid>	
+
+@demo ./things-grid/demo/demo-things-diy-grid.html
+-->
+
+<dom-module id="things-diy-grid">
+	<template>
+		<style>
+			:host {
+				display: block;
+				height: 100%;
+				width: 100%;
+			}
+
+			:host paper-material {
+				padding: 10px;
+			}
+
+			:host paper-toolbar {
+				padding: 10px 0px 0px 0px;
+			}
+
+			paper-toolbar.white {
+				--paper-toolbar-background: white;
+				--paper-toolbar-title: {
+					font-style: italic;
+					font-weight: bold;
+				};
+			}			
+		</style>
+	
+		<paper-material elevation="1" class="flex">
+			<things-ajax 
+				auto
+				id="resource-meta"
+				resource-url="{{resourceMetaUrl}}"
+				last-response="{{metaData}}">
+			</things-ajax>
+
+			<div id="{{gridContainerId}}"></div>
+
+			<paper-toolbar class="white">
+				<content></content>
+			</paper-toolbar>
+		</paper-material>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'things-diy-grid',
+
+			behaviors: [
+				Things.GridConfigBehavior
+			],
+
+			properties: {
+				/**
+				 * DiyGrid Id
+				 */
+				diyGridId: {
+					type: String
+				},
+
+				/**
+				 * Grid Meta Data Search URL
+				 */
+				resourceMetaUrl: {
+					type: String,
+					computed: '_computeDiyGridMetaUrl(diyGridId)'
+				},
+
+				/**
+				 * Grid Meta Data
+				 */
+				metaData: {
+					type: Object,
+					observer: '_metaDataChanged'
+				}	 
+			},			
+	
+			listeners: {
+				'things-grid-configure-failed' : '_gridConfigureFailed',
+				'things-grid-configured' : '_initializeDiyGrid'
+			},
+
+			/**
+			 * diyGridId가 변경되었을 경우 Grid meta data 조회 URL이 결정된다.
+			 *
+			 * @param {String} diyGridId
+			 */
+			_computeDiyGridMetaUrl: function(diyGridId) {
+				return diyGridId ? 'diy_grids/' + diyGridId : null;
+			},
+
+			/**
+			 * Grid meta data가 변경되었을 경우
+			 *
+			 * @param {Object} metaData
+			 */
+			_metaDataChanged: function(metaData) {
+				this.config = (!metaData || !metaData.config || metaData.config.length <= 1) ? null :  JSON.parse(metaData.config);
+				this.model = (!metaData || !metaData.fields || metaData.fields.length <= 1) ? null : JSON.parse(metaData.fields);
+				this.columns = (!metaData || !metaData.columns || metaData.columns.length <= 1) ? null : JSON.parse(metaData.columns);
+			},
+
+			/**
+			 * grid 구성을 위한 meta data 조회 
+			 */
+			refreshMeta: function() {
+				this.$['resource-meta'].generateRequest();
+			},
+
+			/**
+			 * Grid 구성이 실패했을 경우 핸들러 
+			 * 
+			 * @param {Object} event things-grid-configure-failed
+			 */
+			_gridConfigureFailed: function(event) {
+				this.openInfoMsg({
+					type : 'warning',
+					title : 'Grid Configuration Failed',
+					text : 'Error : ' + event.detail.error
+				});
+			},
+
+			/**
+			 * Grid 구성이 완료된 후 핸들러 
+			 *
+			 * @param {Object} event things-grid-configured
+			 */
+			_initializeDiyGrid: function(e) {
+				this.fire('things-diy-grid-configured', this.grid);
+			}
+
+		});
+	</script>
+</dom-module>

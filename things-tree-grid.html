@@ -1,0 +1,81 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../../../bower_components/paper-toolbar/paper-toolbar.html">
+
+<link rel="import" href="../things-grid-behavior/things-tree-grid-config-behavior.html">
+
+<dom-module id="things-tree-grid">
+	<template>
+		<style>
+			:host {
+				display: block;
+				height: 100%;
+				width: 100%;
+				padding: 10px 0px 0px 0px;
+			}
+		</style>
+	
+		<div id="{{gridContainerId}}"></div>
+
+		<paper-toolbar
+			class="white"
+			hidden$="{{!enableToolbar}}">
+
+			<div id="gridToolbar" class="bottom fit" hidden$="{{!paginatable}}">
+				<things-paginator
+					id ="paginator"
+					per-page="{{perPage}}" 
+					current-page="{{currentPage}}" 
+					total-count="[[totalCount]]"
+					page-start-idx="[[pageStartIdx]]"
+					page-end-idx="[[pageEndIdx]]">
+				</things-paginator>
+
+				<content id="toolbarContent" select=".grid-toolbar-content"></content>
+			</div>
+		</paper-toolbar>
+
+	</template>
+
+	<script>
+		Polymer({
+			is: 'things-tree-grid',
+
+			behaviors: [
+				Things.TreeGridConfigBehavior
+			],
+	
+			properties: {
+				/**
+				 * total data count
+				 */
+				totalCount: {
+					type: Number,
+					notify: true
+				},
+
+				/**
+				 * if enable toolbar or not
+				 */
+				enableToolbar: {
+					type: Boolean,
+					value: false
+				}
+			},
+
+			listeners: {
+				'things-grid-configured' : '_initiateTreeGrid',
+			},
+
+			/**
+			 * Grid 구성이 완료된 후 핸들러 
+			 *
+			 * @event {Event} event things-grid-configured
+			 */
+			_initiateTreeGrid: function(e) {
+				this.fire("things-tree-grid-configured", this.grid);
+			}
+
+		});
+	</script>
+</dom-module>
