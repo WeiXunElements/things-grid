@@ -24,6 +24,7 @@ subject to an additional IP rights grant found at https://github.com/hatiolab/th
   <link rel="import" href="../../paper-styles/color.html">
   <link rel="import" href="../../paper-styles/demo-pages.html">
   <link rel="import" href="../../paper-toast/paper-toast.html">
+  <link rel="import" href="../../iron-icons/iron-icons.html">
   
   <link rel="import" href="../../things-ajax/things-ajax.html">
   <link rel="import" href="../../things-button/things-button.html">
@@ -32,7 +33,8 @@ subject to an additional IP rights grant found at https://github.com/hatiolab/th
 
   <link rel="import" href="../things-resource-grid.html">
   <link rel="import" href="demo-resource-content.html">
-
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
   <link rel="stylesheet" href="../../paper-styles/demo.css">
 
   <style is="custom-style">
@@ -78,109 +80,119 @@ subject to an additional IP rights grant found at https://github.com/hatiolab/th
 </head>
 
 <body unresolved>
+  <demo-snippet class="centered-demo">
+  <template id="app">
+    <dom-module id="sample-resource-grid">
+      <template>      
+        <things-button color="green" id="search">Search</things-button>
 
-  <dom-module id="sample-resource-grid">
-    <template>      
-      <things-button color="green" id="search">Search</things-button>
+        <section>
+          <!--demo-resource-content 
+            title="Terminology"
+            resource-type="Terminology"
+            resource-url="terminologies"
+            current-route="[[currentRoute]]"
+            layout="fullbleed layout vertical">
+          </demo-resource-content-->
 
-      <section>
-        <!--demo-resource-content 
-          title="Terminology"
-          resource-type="Terminology"
-          resource-url="terminologies"
-          current-route="[[currentRoute]]"
-          layout="fullbleed layout vertical">
-        </demo-resource-content-->
+          <things-ajax 
+            auto
+            id="resource-meta"
+            resource-url="diy_grids/:id"
+            resource-action="find"
+            resource-id="2"
+            last-response="{{metaData}}">
+          </things-ajax>
 
-        <things-ajax 
-          auto
-          id="resource-meta"
-          resource-url="diy_grids/:id"
-          resource-action="find"
-          resource-id="2"
-          last-response="{{metaData}}">
-        </things-ajax>
+          <things-resource-grid
+            id="grid"
+            enable-detail-column
+            grid-image-dir="../../grid/assets"
+            model="[[metaData.fields]]"
+            columns="[[metaData.columns]]"
+            data="[[data.items]]"
+            total-count="[[data.total]]"
+            current-page="{{page}}"
+            per-page="{{limit}}"
+            grid-save-action="terminologies/update_multiple"
+            paginatable>
 
-        <things-resource-grid
-          id="grid"
-          enable-detail-column
-          grid-image-dir="../../../images/grid/"
-          model="[[metaData.fields]]"
-          columns="[[metaData.columns]]"
-          data="[[data.items]]"
-          total-count="[[data.total]]"
-          current-page="{{page}}"
-          per-page="{{limit}}"
-          grid-save-action="terminologies/update_multiple">
-        </things-resource-grid>
+          </things-resource-grid>
 
-        <things-ajax 
-          id="search-resource"
-          resource-url="terminologies"
-          resource-action="index"
-          last-response="{{data}}">
-        </things-ajax>        
-      </section>
-    </template>
+          <things-ajax 
+            id="search-resource"
+            resource-url="terminologies"
+            resource-action="index"
+            last-response="{{data}}">
+          </things-ajax>        
+        </section>
+      </template>
 
-    <script>
-      Polymer({
+      <script>
+        Polymer({
 
-        is: 'sample-resource-grid',
+          is: 'sample-resource-grid',
 
-        properties: {
-          page : {
-            type: Number,
-            notify: true,
-            value: 1,
-            observer: '_pageChanged'
+          properties: {
+            page : {
+              type: Number,
+              notify: true,
+              value: 1,
+              observer: '_pageChanged'
+            },
+
+            limit: {
+              type: Number,
+              value: 50
+            }
           },
 
-          limit: {
-            type: Number,
-            value: 50
-          }
-        },
+          listeners: {
+            'search.tap' : 'search'
+          },
 
-        listeners: {
-          'search.tap' : 'search'
-        },
+          _pageChanged: function(page) {
+            var ajax = this.$['search-resource'];
+            if(ajax.url) {
+              ajax.page = page;
+              ajax.limit = this.limit;
+              ajax.generateRequest();
+            }          
+          },
 
-        _pageChanged: function(page) {
-          var ajax = this.$['search-resource'];
-          if(ajax.url) {
-            ajax.page = page;
+          search: function(e) {
+            var ajax = this.$['search-resource'];
+            ajax.page = this.page;
             ajax.limit = this.limit;
             ajax.generateRequest();
-          }          
-        },
+          }
 
-        search: function(e) {
-          var ajax = this.$['search-resource'];
-          ajax.page = this.page;
-          ajax.limit = this.limit;
-          ajax.generateRequest();
-        }
+        });
+      </script>
+    </dom-module>
 
-      });
-    </script>
-  </dom-module>
+    <template is="dom-bind" id="content">
+      <things-setting id="setting"></things-setting>
 
-  <template is="dom-bind" id="app">
-    <things-setting id="setting"></things-setting>
+      <section>
+        <h4>Things Resource Grid</h4>
+        <sample-resource-grid></sample-resource-grid>
+      </section>
 
-    <section>
-      <h4>Things Resource Grid</h4>
-      <sample-resource-grid></sample-resource-grid>
-    </section>
+      <things-spinner id="spinner" loading=false></things-spinner>
+      <paper-toast id="toast" class="Toast" duration="8000"></paper-toast>
+      <script type="text/javascript">
+        var app = document.querySelector('#app');
+        var setting = document.querySelector('#setting');
 
-    <things-spinner id="spinner" loading=false></things-spinner>
-    <paper-toast id="toast" class="Toast" duration="8000"></paper-toast>
+        window.addEventListener('WebComponentsReady', function() {
+            if (setting){
+              setting.set('globals.baseUrl', 'http://localhost:8080/components/things-grid/demo/data');
+            }
+        });
+      </script>  
+    </template>
   </template>
-
-  <script type="text/javascript">
-    window.I18nMsg = {};
-  </script>
-
+  </demo-snippet>
 </body>
 </html>

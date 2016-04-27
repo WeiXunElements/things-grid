@@ -1,0 +1,165 @@
+{
+    "config": {
+        "checkBar": {
+            "visible": false
+        }
+    },
+    "fields": [{
+            "fieldName": "product_id",
+            "dataType": "text"
+        }, {
+            "fieldName": "product_name"
+        }, {
+            "fieldName": "customer_id"
+        },
+        "customer_name",
+        "country",
+        "phone",
+        "unit",
+        "currency", {
+            "fieldName": "unit_price",
+            "dataType": "number"
+        }, {
+            "fieldName": "quantity",
+            "dataType": "number"
+        }, {
+            "fieldName": "order_date",
+            "dataType": "datetime",
+            "datetimeFormat": "yyyy-MM-dd"
+        }, {
+            "fieldName": "ship_date",
+            "dataType": "datetime",
+            "datetimeFormat": "iso"
+        }
+    ],
+    "columns": [{
+            "name": "ProductName",
+            "fieldName": "product_name",
+            "width": "90",
+            "mergeExpression": "value",
+            "styles": {},
+            "header": {
+                "text": "ProductName"
+            }
+        }, {
+            "name": "CustomerGroup",
+            "width": 320,
+            "footer": "CustomerGroup Footer",
+            "columns": [{
+                    "name": "Country",
+                    "fieldName": "country",
+                    "width": "70",
+                    "styles": {},
+                    "header": {
+                        "text": "Country"
+                    }
+                }, {
+                    "name": "CustomerId",
+                    "fieldName": "customer_id",
+                    "width": "90",
+                    "styles": {},
+                    "header": {
+                        "text": "CustomerId"
+                    }
+
+                }, {
+                    "name": "CustomerName",
+                    "fieldName": "customer_name",
+                    "width": "90",
+                    "styles": {},
+                    "header": {
+                        "text": "CustomerName"
+
+                    }
+
+                }, {
+                    "name": "Phone",
+                    "fieldName": "phone",
+                    "width": "100",
+                    "styles": {},
+                    "header": {
+                        "text": "Phone"
+                    }
+
+                }
+
+            ]
+
+        }, {
+            "name": "Currency",
+            "fieldName": "currency",
+            "width": "60",
+            "styles": {
+                "textAlignment": "center"
+            },
+            "header": {
+                "text": "Currency"
+            }
+
+        }, {
+            "name": "Quantity",
+            "fieldName": "quantity",
+            "width": "100",
+            "styles": {
+                "textAlignment": "far",
+                "numberFormat": "0,000.000",
+                "postfix": " $",
+                "font": "Arial,12"
+
+            },
+            "header": {
+                "text": "Quantity"
+            },
+            "footer": {
+                "styles": {
+                    "textAlignment": "far",
+                    "numberFormat": "0,000.000",
+                    "postfix": " $",
+                    "font": "Arial,12"
+                },
+                "text": "SUM",
+                "expression": "sum",
+                "dynamicStyles": [{
+                    "criteria": "value > 10000",
+                    "styles": "color=#ff0000"
+                }]
+            }
+
+        }, {
+            "name": "DateGroup",
+            "type": "group",
+            "width": "200",
+            "columns": [
+                {
+                    "name": "OrderDate",
+                    "fieldName": "order_date",
+                    "width": "90",
+                    "styles": {
+                        "datetimeFormat": "yyyy-MM-dd",
+                        "textAlignment": "center"
+                    },
+                    "header": {
+                        "text": "OrderDate"
+                    }
+
+                }, {
+                    "name": "ShipDate",
+                    "fieldName": "ship_date",
+                    "width": "120",
+                    "styles": {
+                        "datetimeFormat": "yyyy-MM-dd hh:mm",
+                        "textAlignment": "center"
+                    },
+                    "header": {
+                        "text": "ShipDate"
+
+                    }
+
+                }
+
+            ]
+
+        }
+
+    ]
+}

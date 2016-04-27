@@ -1,0 +1,52 @@
+{
+    "config": {
+        "checkBar": {
+            "visible": false
+        }
+    },
+    "fields": [{
+            "fieldName": "product_id",
+            "dataType": "text"
+        }, {
+            "fieldName": "product_name"
+        }, {
+            "fieldName": "customer_id"
+        },
+        "customer_name",
+        "country",
+        "phone",
+        "unit",
+        "currency", {
+            "fieldName": "unit_price",
+            "dataType": "number"
+        }, {
+            "fieldName": "quantity",
+            "dataType": "number"
+        }, {
+            "fieldName": "order_date",
+            "dataType": "datetime",
+            "datetimeFormat": "yyyy-MM-dd"
+        }, {
+            "fieldName": "ship_date",
+            "dataType": "datetime",
+            "datetimeFormat": "iso"
+        }
+    ],
+    "columns": [
+        {
+            "fieldName": "product_id"
+        }, {
+            "fieldName": "product_name"
+        }, {
+            "fieldName": "customer_id"
+        }, {
+            "fieldName": "unit_price"
+        }, {
+            "fieldName": "quantity"
+        }, {
+            "fieldName": "order_date"
+        }, {
+            "fieldName": "ship_date"
+        }
+    ]
+}

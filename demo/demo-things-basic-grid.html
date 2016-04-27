@@ -18,7 +18,8 @@ subject to an additional IP rights grant found at https://github.com/hatiolab/th
   <title>things-basic-grid demo</title>
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  
+      <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
   <link rel="import" href="../../polymer/polymer.html">
   <link rel="import" href="../../paper-button/paper-button.html">
   <link rel="import" href="../../paper-styles/color.html">
@@ -81,123 +82,132 @@ subject to an additional IP rights grant found at https://github.com/hatiolab/th
 
 </head>
 <body unresolved>
-
-  <dom-module id="sample-basic-grid">
-    <template>
-      <style>
-        :host {
-          display: block;
-          height: 100%;
-          width: 100%;
-        }
-
-        :host paper-material {
-          padding: 10px;
-        }
-
-        :host paper-toolbar {
-          padding: 10px 0px 0px 0px;
-        }
-
-        paper-toolbar.white {
-          --paper-toolbar-background: white;
-          --paper-toolbar-title: {
-            font-style: italic;
-            font-weight: bold;
-          };
-        }     
-      </style>
-    
-      <paper-material elevation="1" class="flex">
-        <things-button color="green" id="search">Search</things-button>
-
-        <things-ajax 
-          auto
-          id="resource-meta"
-          resource-url="diy_grids/:id"
-          resource-action="find"
-          resource-id="2"
-          last-response="{{metaData}}">
-        </things-ajax>
-
-        <things-basic-grid 
-          id="basic-grid" 
-          grid-image-dir="../../../images/grid"
-          config="[[config]]"
-          model="[[model]]"
-          columns="[[columns]]"
-          data="[[data]]">
-        </things-basic-grid>
-
-        <things-ajax 
-          id="search-resource"
-          method="GET"
-          content-type="application/json"
-          resource-url="diy_services/DynamicScreen/query.json"
-          last-response="{{data}}">
-        </things-ajax>
-
-      </paper-material>
-    </template>
-
-    <script>
-      Polymer({
-        
-        is: 'sample-basic-grid',
-
-        properties: {
-
-          gridSaveAction: {
-            type: String,
-            value: 'terminologies/update_multiple'
-          },
-
-          metaData : {
-            type: Object,
-            observer: '_metaDataChanged'
+  <demo-snippet class="centered-demo">
+  <template id="app">
+    <dom-module id="sample-basic-grid">
+      <template>
+        <style>
+          :host {
+            display: block;
+            height: 100%;
+            width: 100%;
           }
 
-        },
+          :host paper-material {
+            padding: 10px;
+          }
 
-        listeners: {
-          'search.tap' : 'search',
-        },
+          :host paper-toolbar {
+            padding: 10px 0px 0px 0px;
+          }
 
-        /**
-         * Meta Data 변경시 핸들러 
-         */
-        _metaDataChanged: function(metaData) {
-          this.config = metaData.config;
-          this.model = metaData.fields;
-          this.columns = metaData.columns;
-        },
+          paper-toolbar.white {
+            --paper-toolbar-background: white;
+            --paper-toolbar-title: {
+              font-style: italic;
+              font-weight: bold;
+            };
+          }     
+        </style>
+      
+        <paper-material elevation="1" class="flex">
+          <things-button color="green" id="search">Search</things-button>
 
-        /**
-         * 데이터 조회 
-         */
-        search: function(e) {
-          this.$['search-resource'].generateRequest();
-        }        
+          <things-ajax 
+            auto
+            id="resource-meta"
+            resource-url="diy_grids/:id"
+            resource-action="find"
+            resource-id="2"
+            last-response="{{metaData}}">
+          </things-ajax>
 
-      });
-    </script>
-  </dom-module>
+          <things-basic-grid 
+            id="basic-grid" 
+            grid-image-dir="../../grid/assets"
+            config="[[config]]"
+            model="[[model]]"
+            columns="[[columns]]"
+            data="[[data]]">
+          </things-basic-grid>
 
-  <template is="dom-bind" id="app">
-    <things-setting id="setting"></things-setting>
-    
-    <section>
-      <h4>Things Basic Grid</h4>
-      <sample-basic-grid></sample-basic-grid>
-    </section>
+          <things-ajax 
+            id="search-resource"
+            method="GET"
+            content-type="application/json"
+            resource-url="diy_services/DynamicScreen/query.json"
+            last-response="{{data}}">
+          </things-ajax>
 
-    <things-spinner id="spinner" loading=false></things-spinner>
-    <paper-toast id="toast" class="Toast" duration="8000"></paper-toast>
+        </paper-material>
+      </template>
+
+      <script>
+        Polymer({
+          
+          is: 'sample-basic-grid',
+
+          properties: {
+
+            gridSaveAction: {
+              type: String,
+              value: 'terminologies/update_multiple'
+            },
+
+            metaData : {
+              type: Object,
+              observer: '_metaDataChanged'
+            }
+
+          },
+
+          listeners: {
+            'search.tap' : 'search',
+          },
+
+          /**
+           * Meta Data 변경시 핸들러 
+           */
+          _metaDataChanged: function(metaData) {
+            this.config = metaData.config;
+            this.model = metaData.fields;
+            this.columns = metaData.columns;
+          },
+
+          /**
+           * 데이터 조회 
+           */
+          search: function(e) {
+            this.$['search-resource'].generateRequest();
+          }        
+
+        });
+      </script>
+    </dom-module>
+
+    <template is="dom-bind" id="content">
+      <things-setting id="setting"></things-setting>
+      
+      <section>
+        <h4>Things Basic Grid</h4>
+        <sample-basic-grid></sample-basic-grid>
+      </section>
+
+      <things-spinner id="spinner" loading=false></things-spinner>
+      <paper-toast id="toast" class="Toast" duration="8000"></paper-toast>
+
+      <script type="text/javascript">
+        var app = document.querySelector('#content');
+        var setting = document.querySelector('#setting');
+
+        window.addEventListener('WebComponentsReady', function() {
+            if (setting){
+              setting.set('globals.baseUrl', 'http://localhost:8080/components/things-grid/demo/data');
+            }
+        });
+      </script>  
+    </template>
   </template>
-
-  <script type="text/javascript">
-    window.I18nMsg = {};
-  </script>
-
+  </demo-snippet>
 </body>
 </html>
