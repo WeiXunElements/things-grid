@@ -14,7 +14,7 @@
 	  <things-diy-grid diy-grid-id="1">
 	  </things-diy-grid>	
 
-@demo demo/demo-things-diy-grid.html
+@demo  demo/demo-things-diy-grid.html
 -->
 
 <dom-module id="things-diy-grid">
@@ -112,20 +112,9 @@
 			 * @param {Object} metaData
 			 */
 			_metaDataChanged: function(metaData) {
-				if((typeof metaData) === 'string'){
-					this.config = (!metaData || !metaData.config || metaData.config.length <= 1) ? null :  JSON.parse(metaData.config);
-					this.model = (!metaData || !metaData.fields || metaData.fields.length <= 1) ? null : JSON.parse(metaData.fields);
-					this.columns = (!metaData || !metaData.columns || metaData.columns.length <= 1) ? null : JSON.parse(metaData.columns);
-				}else if((typeof metaData)==='object'){
-					this.config = (!metaData || !metaData.config || metaData.config.length <= 1) ? null : metaData.config;
-					this.model = (!metaData || !metaData.fields || metaData.fields.length <= 1) ? null : metaData.fields;
-					this.columns = (!metaData || !metaData.columns || metaData.columns.length <= 1) ? null : metaData.columns;
-				}else {
-					this.config = null;
-					this.model = null;
-					this.columns=null;
-				}
-
+				this.config = (!metaData || !metaData.config || metaData.config.length <= 1) ? null :  JSON.parse(metaData.config);
+				this.model = (!metaData || !metaData.fields || metaData.fields.length <= 1) ? null : JSON.parse(metaData.fields);
+				this.columns = (!metaData || !metaData.columns || metaData.columns.length <= 1) ? null : JSON.parse(metaData.columns);
 			},
 
 			/**

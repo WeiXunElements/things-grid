@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
+
 <link rel="import" href="../things-button/things-button-group.html">
 <link rel="import" href="../things-button/things-button-bar.html">
 <link rel="import" href="../things-grid-behavior/things-grid-config-behavior.html">
@@ -10,12 +11,13 @@
 <link rel="import" href="../things-grid-behavior/things-grid-addrow-behavior.html">
 <link rel="import" href="../things-grid-behavior/things-grid-soft-deleterow-behavior.html">
 <link rel="import" href="../things-grid-behavior/things-grid-save-behavior.html">
+
 <!--
 기본 라소스 그리드. 
 Pagination을 지원하고 import, export, add, delete, save가 가능한 그리드
 Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다. 
 
-	Example:
+  Example:
 
     <things-ajax 
       auto
@@ -49,148 +51,148 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
       grid-save-action="terminologies/update_multiple">
     </things-resource-grid>
 
-@demo 	demo/demo-things-resource-grid.html
+@demo demo/demo-things-resource-grid.html
 -->
+
 <dom-module id="things-resource-grid">
-    <template>
-        <style>
-        :host {
-            display: block;
-            height: 100%;
-            width: 100%;
-        }
-        
-        :host paper-material {
-            padding: 10px;
-        }
-        
-        :host paper-toolbar {
-            padding: 10px 0px 0px 0px;
-        }
-        
-        paper-toolbar.white {
-            --paper-toolbar-background: white;
-            --paper-toolbar-title: {
-                font-style: italic;
-                font-weight: bold;
-            }
-            ;
-        }
-        </style>
-        <paper-material elevation="1" class="flex">
-            <div id="{{gridContainerId}}"></div>
-            <paper-toolbar class="white" hidden$="{{!enableToolbar}}">
-                <!-- paginator -->
-                <div id="toolbar-middle-div" class="middle fit"></div>
-                <!-- button group -->
-                <div id="toolbar-bottom-div" class="bottom fit">
-                    <things-button-bar id="button-group" buttons="[[buttons]]"></things-button-bar>
-                    <!--things-button-group id="button-group" buttons="[[buttons]]"></things-button-group-->
-                </div>
-            </paper-toolbar>
-        </paper-material>
-    </template>
-    <script>
+  <template>
+    <style>
+      :host {
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+
+      :host paper-material {
+        padding: 10px;
+      }
+
+      :host paper-toolbar {
+        padding: 10px 0px 0px 0px;
+      }
+
+      paper-toolbar.white {
+        --paper-toolbar-background: white;
+        --paper-toolbar-title: {
+          font-style: italic;
+          font-weight: bold;
+        };
+      }     
+    </style>
+  
+    <paper-material elevation="1" class="flex">
+      <div id="{{gridContainerId}}"></div>
+    
+      <paper-toolbar class="white" hidden$="{{!enableToolbar}}">
+        <!-- paginator -->
+        <div id="toolbar-middle-div" class="middle fit"></div>
+
+        <!-- button group -->
+        <div id="toolbar-bottom-div" class="bottom fit">          
+          <things-button-bar id="button-group" buttons="[[buttons]]"></things-button-bar>
+          <!--things-button-group id="button-group" buttons="[[buttons]]"></things-button-group-->
+        </div>
+      </paper-toolbar>
+    </paper-material>
+  </template>
+
+  <script>
     Polymer({
-        is: 'things-resource-grid',
+      is: 'things-resource-grid',
 
-        behaviors: [
-            Things.GridConfigBehavior,
-            Things.GridPaginationBehavior,
-            Things.GridImportBehavior,
-            Things.GridExportBehavior,
-            Things.GridAddrowBehavior,
-            Things.GridSoftDeleterowBehavior,
-            Things.GridSaveBehavior
-        ],
-
-        properties: {
-            /**
-             * Button Group에 표시될 버튼 정보.
-             * 기본적으로 아래 다섯개의 버튼에 대해서 지원하고 필요한 버튼만 추가시키면 추가된 버튼만 표시된다.
-             * ex) [ {
-            		id: 'export-btn',
-            		text: 'export',
-            		icon: 'icons:swap-vert'
-            	}, {
-            		id: 'add-btn',
-            		text: 'add',
-            		icon: 'icons:add'
-            	}, {
-            		id: 'delete-btn',
-            		text: 'delete',
-            		icon: 'icons:delete'
-            	}, {
-            		id: 'save-btn',
-            		text: 'save',
-            		icon: 'icons:save'
-            	}, {
-            		id: 'import-btn',
-            		text: 'import',
-            		icon: 'icons:file-upload'
-            	} ]
-             */
-            buttons: {
-                type: Array,
-                value: function() {
-                    return [{
-                        id: 'export-btn',
-                        text: 'export',
-                        icon: 'icons:swap-vert'
-                    }, {
-                        id: 'add-btn',
-                        text: 'add',
-                        icon: 'icons:add'
-                    }, {
-                        id: 'delete-btn',
-                        text: 'delete',
-                        icon: 'icons:delete'
-                    }, {
-                        id: 'save-btn',
-                        text: 'save',
-                        icon: 'icons:save'
-                    }, {
-                        id: 'import-btn',
-                        text: 'import',
-                        icon: 'icons:file-upload'
-                    }];
-                }
-            },
+      behaviors: [
+        Things.GridConfigBehavior,
+        Things.GridPaginationBehavior,
+        Things.GridImportBehavior,
+        Things.GridExportBehavior,
+        Things.GridAddrowBehavior,
+        Things.GridSoftDeleterowBehavior,
+        Things.GridSaveBehavior
+      ],
+  
+      properties: {
+      /**
+       * Button Group에 표시될 버튼 정보.
+       * 기본적으로 아래 다섯개의 버튼에 대해서 지원하고 필요한 버튼만 추가시키면 추가된 버튼만 표시된다.
+       * ex) [ {
+          id: 'export-btn',
+          text: 'export',
+          icon: 'icons:swap-vert'
+        }, {
+          id: 'add-btn',
+          text: 'add',
+          icon: 'icons:add'
+        }, {
+          id: 'delete-btn',
+          text: 'delete',
+          icon: 'icons:delete'
+        }, {
+          id: 'save-btn',
+          text: 'save',
+          icon: 'icons:save'
+        }, {
+          id: 'import-btn',
+          text: 'import',
+          icon: 'icons:file-upload'
+        } ]
+       */
+        buttons : {
+          type: Array,
+          value: function() {
+            return [ {
+                id: 'export-btn',
+                text: 'export',
+                icon: 'icons:swap-vert'
+              }, {
+                id: 'add-btn',
+                text: 'add',
+                icon: 'icons:add'
+              }, {
+                id: 'delete-btn',
+                text: 'delete',
+                icon: 'icons:delete'
+              }, {
+                id: 'save-btn',
+                text: 'save',
+                icon: 'icons:save'
+              }, {
+                id: 'import-btn',
+                text: 'import',
+                icon: 'icons:file-upload'
+              } ];
+          }
         },
+      },
 
-        listeners: {
-            'things-grid-configure-failed': '_gridConfigureFailed'
-        },
+      listeners: {
+        'things-grid-configure-failed' : '_gridConfigureFailed'
+      },
 
-        observers: [
-            '_toolbarConfigChanged(paginatable, buttons)'
-        ],
+      observers: [
+        '_toolbarConfigChanged(paginatable, buttons)'
+      ],
 
-        /**
-         * 툴바 관련 설정 변경시 
-         *
-         * @param {Boolean} paginatable
-         * @param {Array} buttons
-         */
-        _toolbarConfigChanged: function(paginatable, buttons) {
-            this.enableToolbar = (paginatable || (buttons && buttons.length > 0));
-        },
+      /**
+       * 툴바 관련 설정 변경시 
+       *
+       * @param {Boolean} paginatable
+       * @param {Array} buttons
+       */
+      _toolbarConfigChanged: function(paginatable, buttons) {
+        this.enableToolbar = (paginatable || (buttons && buttons.length > 0));
+      },
 
-        /**
-         * Grid 구성이 실패한 후 핸들러
-         * 
-         * @param {Object} event things-grid-configure-failed
-         */
-        _gridConfigureFailed: function(event) {
-            var title = 'Grid Configuration Error';
-            var text = 'Error : ' + event.detail.error;
-            this.openInfoMsg({
-                type: 'error',
-                title: title,
-                text: text
-            });
-        }
+      /**
+       * Grid 구성이 실패한 후 핸들러
+       * 
+       * @param {Object} event things-grid-configure-failed
+       */
+      _gridConfigureFailed: function(event) {
+        var title = 'Grid Configuration Error';
+        var text = 'Error : ' + event.detail.error;
+        this.openInfoMsg({ type : 'error', title : title, text : text });
+      }     
 
     });
-    </script>
+  </script>
 </dom-module>
