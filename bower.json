@@ -19,13 +19,13 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.2.0",
-    "things-grid-behavior": "ThingsElements/things-grid-behavior#latest",
-    "things-button": "ThingsElements/things-button#latest",
     "paper-toolbar": "^1.1.4",
     "iron-resizable-behavior": "^1.0.3",
     "paper-material": "^1.0.6",
     "jszip": "^3.0.0",
-    "grid": "dataludi/grid#^1.2.4"
+    "grid": "dataludi/grid#^1.2.4",
+    "things-grid-behavior": "ThingsElements/things-grid-behavior",
+    "things-button": "ThingsElements/things-button"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
@@ -35,13 +35,13 @@
     "iron-iconset": "^1.0.4",
     "iron-iconset-svg": "^1.0.9",
     "paper-icon-button": "^1.0.7",
-    "things-ajax": "ThingsElements/things-ajax#latest",
-    "things-button": "ThingsElements/things-button#latest",
-    "things-spinner": "ThingsElements/things-spinner#latest",
-    "things-setting": "ThingsElements/things-setting#latest",
     "paper-styles": "^1.1.4",
     "paper-button": "^1.0.11",
     "paper-toast": "^1.2.2",
-    "iron-demo-helpers": "^1.2.3"
+    "iron-demo-helpers": "^1.2.3",
+    "things-ajax": "ThingsElements/things-ajax",
+    "things-button": "ThingsElements/things-button",
+    "things-spinner": "ThingsElements/things-spinner",
+    "things-setting": "ThingsElements/things-setting"
   }
 }
