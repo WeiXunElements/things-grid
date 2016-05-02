@@ -14,8 +14,7 @@
   [
     "things-basic-grid.html",
     "things-diy-grid.html",
-    "things-resource-grid.html",
-    "things-tree-grid.html"
+    "things-resource-grid.html"
   ],
   "license": "http://polymer.github.io/LICENSE.txt",
   "homepage": "https://github.com/ThingsElements/things-grid.html/",
