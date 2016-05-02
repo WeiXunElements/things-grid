@@ -10,11 +10,8 @@
     "polymer",
     "seed"
   ],
-  "main": 
-  [
-    "things-basic-grid.html",
-    "things-diy-grid.html",
-    "things-resource-grid.html"
+  "main": [
+    "elements.html"
   ],
   "license": "http://polymer.github.io/LICENSE.txt",
   "homepage": "https://github.com/ThingsElements/things-grid.html/",
