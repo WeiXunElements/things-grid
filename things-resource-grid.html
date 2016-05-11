@@ -63,21 +63,14 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
         width: 100%;
       }
 
-      :host paper-material {
-        padding: 10px;
+      paper-material::shadow .things-resource-grid{
+        @apply(--things-default-padding);
       }
-
-      :host paper-toolbar {
-        padding: 10px 0px 0px 0px;
+      paper-toolbar{
+        background-color:var(--things-lightgrey-background-color);
+        @apply(--things-tight-padding);
+        border-top:1px solid rgba(0,0,0,.1);
       }
-
-      paper-toolbar.white {
-        --paper-toolbar-background: white;
-        --paper-toolbar-title: {
-          font-style: italic;
-          font-weight: bold;
-        };
-      }     
     </style>
   
     <paper-material elevation="1" class="flex">
