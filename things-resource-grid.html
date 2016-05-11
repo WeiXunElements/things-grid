@@ -62,26 +62,28 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
         height: 100%;
         width: 100%;
       }
-
-      paper-material::shadow .things-resource-grid{
-        @apply(--things-default-padding);
-      }
       paper-toolbar{
-        background-color:var(--things-lightgrey-background-color);
+        background-color:var(--things-white-background-color);
+        height:50px;
         @apply(--things-tight-padding);
-        border-top:1px solid rgba(0,0,0,.1);
+      }
+      paper-toolbar::shadow #bottomBar{
+        height:50px;
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        padding:0 10px;
       }
     </style>
   
     <paper-material elevation="0" class="flex">
       <div id="{{gridContainerId}}"></div>
     
-      <paper-toolbar class="white" hidden$="{{!enableToolbar}}">
+      <paper-toolbar hidden$="{{!enableToolbar}}">
         <!-- paginator -->
         <div id="toolbar-middle-div" class="middle fit"></div>
 
         <!-- button group -->
-        <div id="toolbar-bottom-div" class="bottom fit">          
+        <div id="toolbar-bottom-div" class="bottom">          
           <things-button-bar id="button-group" buttons="[[buttons]]"></things-button-bar>
           <!--things-button-group id="button-group" buttons="[[buttons]]"></things-button-group-->
         </div>
