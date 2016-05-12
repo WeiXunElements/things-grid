@@ -59,8 +59,7 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
     <style>
       :host {
         display: block;
-        height: 100%;
-        width: 100%;
+        @apply(--layout-vertical);
       }
       paper-toolbar{
         background-color:var(--things-white-background-color);
@@ -73,10 +72,14 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
         @apply(--layout-end-justified);
         padding:0 10px;
       }
+      .grid{
+        height: 100%;
+        @apply(--layout-flex);
+      }
     </style>
-  
-    <paper-material elevation="0" class="flex">
-      <div id="{{gridContainerId}}"></div>
+
+      <!-- flex를 위해 class grid 추가  -->
+      <div id="{{gridContainerId}}" class="grid"></div>
     
       <paper-toolbar hidden$="{{!enableToolbar}}">
         <!-- paginator -->
@@ -85,10 +88,9 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
         <!-- button group -->
         <div id="toolbar-bottom-div" class="bottom">          
           <things-button-bar id="button-group" buttons="[[buttons]]"></things-button-bar>
-          <!--things-button-group id="button-group" buttons="[[buttons]]"></things-button-group-->
         </div>
       </paper-toolbar>
-    </paper-material>
+
   </template>
 
   <script>
