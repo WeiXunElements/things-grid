@@ -19,44 +19,41 @@
 
 <dom-module id="things-diy-grid">
 	<template>
-		<style>
-			:host {
-				display: block;
-				height: 100%;
-				width: 100%;
-			}
-
-			:host paper-material {
-				padding: 10px;
-			}
-
-			:host paper-toolbar {
-				padding: 10px 0px 0px 0px;
-			}
-
-			paper-toolbar.white {
-				--paper-toolbar-background: white;
-				--paper-toolbar-title: {
-					font-style: italic;
-					font-weight: bold;
-				};
-			}			
-		</style>
+    <style>
+      :host {
+        display: block;
+        @apply(--layout-vertical);
+      }
+      paper-toolbar{
+        background-color:var(--things-white-background-color);
+        height:50px;
+        @apply(--things-tight-padding);
+      }
+      paper-toolbar::shadow #bottomBar{
+        height:50px;
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        padding:0 10px;
+      }
+      .grid{
+        height: 100%;
+        @apply(--layout-flex);
+      }
+    </style>
 	
-		<paper-material elevation="1" class="flex">
-			<things-ajax 
-				auto
-				id="resource-meta"
-				resource-url="{{resourceMetaUrl}}"
-				last-response="{{metaData}}">
-			</things-ajax>
+		<things-ajax 
+			auto
+			id="resource-meta"
+			resource-url="{{resourceMetaUrl}}"
+			last-response="{{metaData}}">
+		</things-ajax>
 
-			<div id="{{gridContainerId}}"></div>
+		<div id="{{gridContainerId}}" class="grid"></div>
 
-			<paper-toolbar class="white">
-				<content></content>
-			</paper-toolbar>
-		</paper-material>
+		<paper-toolbar class="white">
+			<content></content>
+		</paper-toolbar>
+		
 	</template>
 
 	<script>
