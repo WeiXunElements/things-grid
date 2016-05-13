@@ -7,34 +7,38 @@
 <dom-module id="things-tree-grid">
 	<template>
 		<style>
-			:host {
-				display: block;
-				height: 100%;
-				width: 100%;
-				padding: 10px 0px 0px 0px;
-			}
+      :host {
+        display: block;
+        @apply(--layout-vertical);
+      }
+      paper-toolbar{
+        background-color:var(--things-white-background-color);
+        height:50px;
+        @apply(--things-tight-padding);
+      }
+      paper-toolbar::shadow #bottomBar{
+        height:50px;
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        padding:0 10px;
+      }
+      .grid{
+        height: 100%;
+        @apply(--layout-flex);
+      }	
 		</style>
 	
-		<div id="{{gridContainerId}}"></div>
+		<div id="{{gridContainerId}}" class="grid"></div>
 
-		<paper-toolbar
-			class="white"
-			hidden$="{{!enableToolbar}}">
+    <paper-toolbar hidden$="{{!enableToolbar}}">
+      <!-- paginator -->
+      <div id="toolbar-middle-div" class="middle fit"></div>
 
-			<div id="gridToolbar" class="bottom fit" hidden$="{{!paginatable}}">
-				<things-paginator
-					id ="paginator"
-					per-page="{{perPage}}" 
-					current-page="{{currentPage}}" 
-					total-count="[[totalCount]]"
-					page-start-idx="[[pageStartIdx]]"
-					page-end-idx="[[pageEndIdx]]">
-				</things-paginator>
-
-				<content id="toolbarContent" select=".grid-toolbar-content"></content>
-			</div>
-		</paper-toolbar>
-
+      <!-- button group -->
+      <div id="toolbar-bottom-div" class="bottom">          
+        <things-button-bar id="button-group" buttons="[[buttons]]"></things-button-bar>
+      </div>
+    </paper-toolbar>
 	</template>
 
 	<script>

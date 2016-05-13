@@ -1,5 +1,4 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
 
 <link rel="import" href="../things-button/things-button-group.html">
@@ -78,19 +77,18 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
       }
     </style>
 
-      <!-- flex를 위해 class grid 추가  -->
-      <div id="{{gridContainerId}}" class="grid"></div>
-    
-      <paper-toolbar hidden$="{{!enableToolbar}}">
-        <!-- paginator -->
-        <div id="toolbar-middle-div" class="middle fit"></div>
+    <!-- flex를 위해 class grid 추가  -->
+    <div id="{{gridContainerId}}" class="grid"></div>
+  
+    <paper-toolbar hidden$="{{!enableToolbar}}">
+      <!-- paginator -->
+      <div id="toolbar-middle-div" class="middle fit"></div>
 
-        <!-- button group -->
-        <div id="toolbar-bottom-div" class="bottom">          
-          <things-button-bar id="button-group" buttons="[[buttons]]"></things-button-bar>
-        </div>
-      </paper-toolbar>
-
+      <!-- button group -->
+      <div id="toolbar-bottom-div" class="bottom">          
+        <things-button-bar id="button-group" buttons="[[buttons]]"></things-button-bar>
+      </div>
+    </paper-toolbar>
   </template>
 
   <script>
