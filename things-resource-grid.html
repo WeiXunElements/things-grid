@@ -61,18 +61,21 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
         @apply(--layout-vertical);
         @apply(--things-table-padding);
       }
-      paper-toolbar{
+
+      paper-toolbar {
         background-color:var(--things-white-background-color);
         height:50px;
         @apply(--things-tight-padding);
       }
-      paper-toolbar::shadow #bottomBar{
+
+      paper-toolbar::shadow #bottomBar {
         height:50px;
         @apply(--layout-horizontal);
         @apply(--layout-end-justified);
         padding:0 10px;
       }
-      .grid{
+
+      .grid {
         height: 100%;
         @apply(--layout-flex);
       }
@@ -106,60 +109,6 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
         Things.GridSaveBehavior
       ],
   
-      properties: {
-      /**
-       * Button Group에 표시될 버튼 정보.
-       * 기본적으로 아래 다섯개의 버튼에 대해서 지원하고 필요한 버튼만 추가시키면 추가된 버튼만 표시된다.
-       * ex) [ {
-          id: 'export-btn',
-          text: 'export',
-          icon: 'icons:swap-vert'
-        }, {
-          id: 'add-btn',
-          text: 'add',
-          icon: 'icons:add'
-        }, {
-          id: 'delete-btn',
-          text: 'delete',
-          icon: 'icons:delete'
-        }, {
-          id: 'save-btn',
-          text: 'save',
-          icon: 'icons:save'
-        }, {
-          id: 'import-btn',
-          text: 'import',
-          icon: 'icons:file-upload'
-        } ]
-       */
-        buttons : {
-          type: Array,
-          value: function() {
-            return [ {
-                id: 'export-btn',
-                text: 'export',
-                icon: 'icons:swap-vert'
-              }, {
-                id: 'add-btn',
-                text: 'add',
-                icon: 'icons:add'
-              }, {
-                id: 'delete-btn',
-                text: 'delete',
-                icon: 'icons:delete'
-              }, {
-                id: 'save-btn',
-                text: 'save',
-                icon: 'icons:save'
-              }, {
-                id: 'import-btn',
-                text: 'import',
-                icon: 'icons:file-upload'
-              } ];
-          }
-        },
-      },
-
       listeners: {
         'things-grid-configure-failed' : '_gridConfigureFailed'
       },
