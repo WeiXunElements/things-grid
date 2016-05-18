@@ -50,52 +50,65 @@ mixin 하고 있어서 그리드에 데이터만 표시하는데 사용된다.
 -->
 
 <dom-module id="things-basic-grid">
-	<template>
-		<style>
+  <template>
+    <style>
       :host {
         display: block;
         @apply(--layout-vertical);
+        @apply(--things-table-padding);
       }
-      paper-toolbar{
+      .grid-container {
+        @apply(--layout-flex);
+        @apply(--layout-vertical);
+      }
+      .grid {
+        @apply(--layout-flex);
+        @apply(--layout-vertical);
+      }
+      .grid::shadow div {
+        @apply(--layout-flex);
+      }
+      #paginator-container {
+        height: 30px;
+      }
+      paper-toolbar {
         background-color:var(--things-white-background-color);
-        height:50px;
+        height: 50px;
         @apply(--things-tight-padding);
       }
-      paper-toolbar::shadow #bottomBar{
-        height:50px;
+      paper-toolbar::shadow #bottomBar {
+        height: 50px;
         @apply(--layout-horizontal);
         @apply(--layout-end-justified);
-        padding:0 10px;
+        padding: 0 10px;
       }
-      .grid{
-        height: 100%;
-        @apply(--layout-flex);
-      }	
-		</style>
-	
-		<div id="{{gridContainerId}}" class="grid"></div>
-	
-		<paper-toolbar class="white" hidden$="{{!enableToolbar}}">
-			<!-- paginator -->
-			<div id="toolbar-middle-div" class="middle fit"></div>
+    </style>
 
-			<!-- button group -->
-			<div id="toolbar-bottom-div" class="bottom fit">
-				<things-button-bar id="button-group" buttons="{{buttons}}"></things-button-bar>
-			</div>
-		</paper-toolbar>
-	</template>
+    <div class="grid-container">
+    	<!-- grid -->
+      <div id="{{gridContainerId}}" class="grid"></div>
+      <!-- paginator -->
+      <div id="paginator-container" hidden$="[[!paginatable]]"></div>
+    </div>
+  
+    <paper-toolbar hidden$="{{!enableToolbar}}">
+      <!-- button group -->
+      <div class="bottom">          
+        <things-button-bar id="button-group" buttons="[[buttons]]"></things-button-bar>
+      </div>
+    </paper-toolbar>
+  </template>
 
 	<script>
 		Polymer({
 			is: 'things-basic-grid',
 
 			behaviors: [
-				Things.GridConfigBehavior
+				Things.GridConfigBehavior,
+				Things.GridPaginationBehavior
 			],
 	
 			properties: {
-
 				/**
 			   * Button Group에 표시될 버튼 정보
 			   */
@@ -112,7 +125,7 @@ mixin 하고 있어서 그리드에 데이터만 표시하는데 사용된다.
 			},
 
 			observers: [
-				'_toolbarConfigChanged(paginatable, buttons)'
+				'_toolbarConfigChanged(buttons)'
 			],
 
 			/**
@@ -162,11 +175,10 @@ mixin 하고 있어서 그리드에 데이터만 표시하는데 사용된다.
 			/**
 			 * 툴바 관련 설정 변경시 
 			 *
-			 * @param {Boolean} paginatable
 			 * @param {Array} buttons
 			 */
-			_toolbarConfigChanged: function(paginatable, buttons) {
-				this.enableToolbar = (paginatable || (buttons && buttons.length > 0));
+			_toolbarConfigChanged: function(buttons) {
+				this.enableToolbar = buttons && buttons.length > 0;
 			},
 
 			/**

@@ -61,7 +61,7 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
         @apply(--layout-vertical);
         @apply(--things-table-padding);
       }
-      .grid-container{
+      .grid-container {
         @apply(--layout-flex);
         @apply(--layout-vertical);
       }
@@ -69,38 +69,35 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
         @apply(--layout-flex);
         @apply(--layout-vertical);
       }
-      .grid::shadow div{
+      .grid::shadow div {
         @apply(--layout-flex);
       }
-      
-      #toolbar-middle-div{
-        height:30px;
+      #paginator-container {
+        height: 30px;
       }
-
       paper-toolbar {
         background-color:var(--things-white-background-color);
-        height:50px;
+        height: 50px;
         @apply(--things-tight-padding);
       }
-
       paper-toolbar::shadow #bottomBar {
-        height:50px;
+        height: 50px;
         @apply(--layout-horizontal);
         @apply(--layout-end-justified);
-        padding:0 10px;
+        padding: 0 10px;
       }
     </style>
 
-    <!-- flex를 위해 class grid 추가  -->
     <div class="grid-container">
+      <!-- grid -->
       <div id="{{gridContainerId}}" class="grid"></div>
       <!-- paginator -->
-      <div id="toolbar-middle-div"></div>
+      <div id="paginator-container" hidden$="[[!paginatable]]"></div>
     </div>
   
     <paper-toolbar hidden$="{{!enableToolbar}}">
       <!-- button group -->
-      <div id="toolbar-bottom-div" class="bottom">          
+      <div class="bottom">
         <things-button-bar id="button-group" buttons="[[buttons]]"></things-button-bar>
       </div>
     </paper-toolbar>
@@ -125,17 +122,16 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
       },
 
       observers: [
-        '_toolbarConfigChanged(paginatable, buttons)'
+        '_toolbarConfigChanged(buttons)'
       ],
 
       /**
        * 툴바 관련 설정 변경시 
        *
-       * @param {Boolean} paginatable
        * @param {Array} buttons
        */
       _toolbarConfigChanged: function(paginatable, buttons) {
-        this.enableToolbar = (paginatable || (buttons && buttons.length > 0));
+        this.enableToolbar = buttons && buttons.length > 0;
       },
 
       /**
