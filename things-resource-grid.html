@@ -66,9 +66,13 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
         @apply(--layout-vertical);
       }
       .grid {
-        height: 100%;
+        @apply(--layout-flex);
+        @apply(--layout-vertical);
+      }
+      .grid::shadow div{
         @apply(--layout-flex);
       }
+      
       #toolbar-middle-div{
         height:30px;
       }
