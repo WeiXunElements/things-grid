@@ -10,13 +10,13 @@
 
 <link rel="import" href="../../things-ajax/things-ajax.html">
 <link rel="import" href="../../things-button/things-button.html">
-<link rel="import" href="../things-resource-grid.html">
 <link rel="import" href="../../things-form/things-resource-form.html">
 <link rel="import" href="../../things-form/things-search-form.html">
 
-<link rel="import" href="../../things-meta/things-resource-meta-behavior.html">
+<link rel="import" href="../../things-meta/things-entity-meta-behavior.html">
 <link rel="import" href="../../things-route-content-behavior/things-route-content-behavior.html">
 
+<link rel="import" href="../things-resource-grid.html">
 <!--
 하나의 리소스에 대한 기본 액션 (List, Create, Find, Upate, Delete) 및 Import, Export 등의 기능을 제공하는 화면 셋 
 
@@ -93,7 +93,7 @@ Things Reource Content는 검색 폼, 그리드가 기본으로 표시되고 그
 			is: 'demo-resource-content',
 
 			behaviors: [ 
-				Things.ResourceMetaBehavior,
+				Things.EntityMetaBehavior,
 				Things.RouteContentBehavior
 			],
 			
@@ -205,7 +205,6 @@ Things Reource Content는 검색 폼, 그리드가 기본으로 표시되고 그
 			 * 메타 데이터를 서버로 요청하여 화면을 구성한다.
 			 */
 			initializeContent: function() {
-				console.log(this.resourceMetaUrl);
 				this.$['resources-meta'].generateRequest();
 			}
 

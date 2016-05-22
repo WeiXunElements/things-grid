@@ -18,8 +18,8 @@ subject to an additional IP rights grant found at https://github.com/hatiolab/th
   <title>things-basic-grid demo</title>
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-      <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
   <link rel="import" href="../../polymer/polymer.html">
   <link rel="import" href="../../paper-button/paper-button.html">
   <link rel="import" href="../../paper-styles/color.html">
@@ -201,9 +201,9 @@ subject to an additional IP rights grant found at https://github.com/hatiolab/th
         var setting = document.querySelector('#setting');
 
         window.addEventListener('WebComponentsReady', function() {
-            if (setting){
-              setting.set('globals.baseUrl', 'http://localhost:8080/components/things-grid/demo/data');
-            }
+          if (setting){
+            setting.set('globals.baseUrl', 'http://localhost:8080/components/things-grid/demo/data');
+          }
         });
       </script>  
     </template>
