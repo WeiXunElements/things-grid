@@ -90,7 +90,7 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
 
     <div class="grid-container">
       <!-- grid -->
-      <div id="{{gridContainerId}}" class="grid"></div>
+      <div id="{{gridContainerId}}" class="grid" on-mouseout="_onMouseout"></div>
       <!-- paginator -->
       <div id="paginator-container" hidden$="[[!showPaginator]]"></div>
     </div>
@@ -143,6 +143,10 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
         var title = 'Grid Configuration Error';
         var text = 'Error : ' + event.detail.error;
         this.openInfoMsg({ type : 'error', title : title, text : text });
+      },
+
+      _onMouseout: function (event) {
+        this.grid.commit();
       }     
 
     });
