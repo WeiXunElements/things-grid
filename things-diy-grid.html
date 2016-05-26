@@ -47,7 +47,7 @@
 			last-response="{{metaData}}">
 		</things-ajax>
 
-		<div id="{{gridContainerId}}" class="grid"></div>
+		<div id="{{gridContainerId}}" class="grid" on-mouseout="_onMouseout"></div>
 
 		<paper-toolbar class="white">
 			<content></content>
@@ -139,7 +139,11 @@
 			 */
 			_initializeDiyGrid: function(e) {
 				this.fire('things-diy-grid-configured', this.grid);
-			}
+			},
+
+			_onMouseout: function (event) {
+		        this.grid.commit();
+		    }
 
 		});
 	</script>
