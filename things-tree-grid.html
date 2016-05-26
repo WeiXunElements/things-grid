@@ -41,7 +41,7 @@
 
     <div class="grid-container">
       <!-- grid -->
-      <div id="{{gridContainerId}}" class="grid"></div>
+      <div id="{{gridContainerId}}" class="grid" on-mouseout="_onMouseout"></div>
       <!-- paginator -->
       <!--div id="paginator-container" hidden$="[[!paginatable]]"></div-->
     </div>
@@ -81,17 +81,29 @@
 			},
 
 			listeners: {
-				'things-grid-configured' : '_initiateTreeGrid',
+        'things-grid-configure-failed' : '_gridConfigureFailed'
 			},
 
-			/**
-			 * Grid 구성이 완료된 후 핸들러 
-			 *
-			 * @event {Event} event things-grid-configured
-			 */
-			_initiateTreeGrid: function(e) {
-				this.fire("things-tree-grid-configured", this.grid);
-			}
+      /**
+       * Grid 구성이 실패한 후 핸들러
+       * 
+       * @param {Object} event things-grid-configure-failed
+       */
+      _gridConfigureFailed: function(event) {
+        var title = 'Grid Configuration Error';
+        var text = 'Error : ' + event.detail.error;
+        this.openInfoMsg({ type : 'error', title : title, text : text });
+      },
+
+      /**
+       * Grid Container에서 Focus가 벗어난 경우
+       *
+       * @param {Object} event on-mouse-out 이벤트 
+       */
+      _onMouseout: function (event) {
+        if(this.grid)
+          this.grid.commit();
+      }      
 
 		});
 	</script>

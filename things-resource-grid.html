@@ -145,9 +145,15 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
         this.openInfoMsg({ type : 'error', title : title, text : text });
       },
 
+      /**
+       * Grid Container에서 Focus가 벗어난 경우
+       *
+       * @param {Object} event on-mouse-out 이벤트 
+       */
       _onMouseout: function (event) {
-        this.grid.commit();
-      }     
+        if(this.grid)
+          this.grid.commit();
+      }
 
     });
   </script>
