@@ -129,6 +129,12 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
       observers: [
         '_toolbarConfigChanged(buttons)'
       ],
+      ready: function(){
+        var self = this;
+        document.addEventListener("things-routing-changed", function(event){
+          self.resizeGrid();
+        });
+      },
 
       /**
        * 툴바 관련 설정 변경시 
