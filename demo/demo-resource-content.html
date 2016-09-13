@@ -59,7 +59,7 @@ Things Reource Content는 검색 폼, 그리드가 기본으로 표시되고 그
 				form-fields="[[searchFormFields]]" 
 				action-url="[[resourceUrl]]" 
 				page="{{page}}"
-				per-page="[[perPage]]"
+				limit="[[limit]]"
 				last-response="{{lastResponse}}">
 			</things-search-form>
 
@@ -70,7 +70,7 @@ Things Reource Content는 검색 폼, 그리드가 기본으로 표시되고 그
 				data="[[lastResponse.items]]"
 				total-count ="[[lastResponse.total]]"
 				current-page="{{page}}"
-				per-page="{{perPage}}"
+				limit="{{limit}}"
 				grid-save-action="[[gridSaveUrl]]"
 				selected-row-data="{{selectedRow}}"
 				export-file-name="[[title]]"
