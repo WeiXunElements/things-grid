@@ -92,7 +92,8 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
 
     <div class="grid-container">
       <!-- grid -->
-      <div id="{{gridContainerId}}" class="grid" on-mouseout="_onMouseout"></div>
+      <!--div id="{{gridContainerId}}" class="grid" on-mouseout="_onMouseout"></div-->
+      <div id="{{gridContainerId}}" class="grid"></div>
       <!-- paginator -->
       <div id="paginator-container" hidden$="[[!showPaginator]]"></div>
     </div>
@@ -155,10 +156,10 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
        *
        * @param {Object} event on-mouse-out 이벤트 
        */
-      _onMouseout: function (event) {
+      /*_onMouseout: function (event) {
         if(this.grid)
           this.grid.commit();
-      }
+      }*/
     });
   </script>
 </dom-module>
