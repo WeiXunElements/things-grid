@@ -41,7 +41,8 @@
 
     <div class="grid-container">
       <!-- grid -->
-      <div id="{{gridContainerId}}" class="grid" on-mouseout="_onMouseout"></div>
+      <!--div id="{{gridContainerId}}" class="grid" on-mouseout="_onMouseout"></div-->
+      <div id="{{gridContainerId}}" class="grid"></div>
       <!-- paginator -->
       <!--div id="paginator-container" hidden$="[[!paginatable]]"></div-->
     </div>
@@ -90,9 +91,9 @@
        * @param {Object} event things-grid-configure-failed
        */
       _gridConfigureFailed: function(event) {
-        var title = 'Grid Configuration Error';
-        var text = 'Error : ' + event.detail.error;
-        this.openInfoMsg({ type : 'error', title : title, text : text });
+        var title = Things.DataGlobal.t('text.grid_config_error');
+        var text = event.detail.error;
+        this.openInfoMsg({ type : 'error', title : title, text : text });        
       },
 
       /**
@@ -100,11 +101,10 @@
        *
        * @param {Object} event on-mouse-out 이벤트 
        */
-      _onMouseout: function (event) {
+      /*_onMouseout: function (event) {
         if(this.grid)
           this.grid.commit();
-      }      
-
+      }*/
 		});
 	</script>
 </dom-module>
