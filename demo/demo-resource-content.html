@@ -1,3 +1,7 @@
+<!--
+@license
+Copyright (c) 2017, HatioLab Inc. All right reserved.
+-->
 <link rel="import" href="../../polymer/polymer.html">
 
 <link rel="import" href="../../iron-icon/iron-icon.html">
@@ -17,22 +21,6 @@
 <link rel="import" href="../../things-route-content-behavior/things-route-content-behavior.html">
 
 <link rel="import" href="../things-resource-grid.html">
-<!--
-하나의 리소스에 대한 기본 액션 (List, Create, Find, Upate, Delete) 및 Import, Export 등의 기능을 제공하는 화면 셋 
-
-Things Reource Content는 검색 폼, 그리드가 기본으로 표시되고 그리드에서 레코드 하나를 선택할 경우 해당 레코드에 대한 Detail Form이 출력된다.
-
-	Example:
-
-	<things-resource-content 
-	  title="Terminology"
-	  resource-type="Terminology"
-	  resource-url="terminologies"
-	  layout="fullbleed layout vertical">
-	</things-resource-content>
-
-@demo ./things-content/demo/index.html
--->
 
 <dom-module id="demo-resource-content">
 	<template>
@@ -96,8 +84,8 @@ Things Reource Content는 검색 폼, 그리드가 기본으로 표시되고 그
 				Things.EntityMetaBehavior,
 				Things.RouteContentBehavior
 			],
-			
-			properties: {
+
+						properties: {
 				/**
 				 * Screen layout
 				 */
