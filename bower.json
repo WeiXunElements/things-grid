@@ -1,6 +1,6 @@
 {
   "name": "things-grid",
-  "version": "v2.0.0",
+  "version": "2.2.0",
   "authors": [
     "Hatio Lab. <heartyoh@hatiolab.com>"
   ],
@@ -13,8 +13,8 @@
   "main": [
     "elements.html"
   ],
-  "license": "http://polymer.github.io/LICENSE.txt",
-  "homepage": "https://github.com/ThingsElements/things-grid.html/",
+  "license": "http://license.hatiolab.com/EULA",
+  "homepage": "http://elements.hatiolab.com/",
   "ignore": [
     "/.*",
     "/test/"
