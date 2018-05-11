@@ -29,7 +29,7 @@
         }, {
             "fieldName": "ship_date",
             "dataType": "datetime",
-            "datetimeFormat": "iso"
+            "datetimeFormat": "yyyy-MM-dd"
         }
     ],
     "columns": [
