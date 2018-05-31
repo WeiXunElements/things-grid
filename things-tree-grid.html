@@ -5,8 +5,14 @@ Copyright © HatioLab Inc. All rights reserved.
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
+
 <link rel="import" href="../things-grid-behavior/things-tree-grid-config-behavior.html">
 <link rel="import" href="../things-grid-behavior/things-tree-grid-addrow-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-pagination-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-export-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-addrow-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-soft-deleterow-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-save-behavior.html">
 
 <dom-module id="things-tree-grid">
   <template>
@@ -42,13 +48,13 @@ Copyright © HatioLab Inc. All rights reserved.
         padding: 0 10px;
       }
     </style>
-
+  
     <div class="grid-container">
       <!-- grid -->
       <!--div id="{{gridContainerId}}" class="grid" on-mouseout="_onMouseout"></div-->
       <div id="{{gridContainerId}}" class="grid"></div>
       <!-- paginator -->
-      <!--div id="paginator-container" hidden$="[[!paginatable]]"></div-->
+      <div id="paginator-container" hidden$="[[!paginatable]]"></div-->
     </div>
   
     <paper-toolbar hidden$="{{!enableToolbar}}">
@@ -59,41 +65,40 @@ Copyright © HatioLab Inc. All rights reserved.
     </paper-toolbar>
   </template>
 
-	<script>
-		Polymer({
-			is: 'things-tree-grid',
+  <script>
+    Polymer({
+      is: 'things-tree-grid',
 
-			behaviors: [
-				Things.TreeGridConfigBehavior,
+      behaviors: [
+        Things.TreeGridConfigBehavior,
         Things.TreeGridAddrowBehavior,
         Things.GridPaginationBehavior,
         Things.GridExportBehavior,
         Things.GridSoftDeleterowBehavior,
         Things.GridSaveBehavior
-			],
-	
-			properties: {
-				/**
-				 * total data count
-				 */
-				totalCount: {
-					type: Number,
-					notify: true
-				},
+      ],
+  
+      properties: {
+        /**
+         * total data count
+         */
+        totalCount: {
+          type: Number,
+          notify: true
+        },
 
-				/**
-				 * if enable toolbar or not
-				 */
-				enableToolbar: {
-					type: Boolean,
-					value: false
-				}
-			},
+        /**
+         * if enable toolbar or not
+         */
+        enableToolbar: {
+          type: Boolean,
+          value: false
+        }
+      },
 
-			listeners: {
-        'things-grid-configure-failed' : '_gridConfigureFailed'
-			},
-
+      listeners: {
+        'things-grid-configure-failed' : '_gridConfigureFailed',
+      },
       /**
        * Grid 구성이 실패한 후 핸들러
        * 
@@ -114,6 +119,6 @@ Copyright © HatioLab Inc. All rights reserved.
         if(this.grid)
           this.grid.commit();
       }*/
-		});
-	</script>
+    });
+  </script>
 </dom-module>
