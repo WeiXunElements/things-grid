@@ -21,6 +21,12 @@ Copyright © HatioLab Inc. All rights reserved.
         display: block;
         @apply(--layout-vertical);
         @apply(--things-table-padding);
+        --paper-toolbar-content: {
+          height: 50px;
+          @apply(--layout-horizontal);
+          @apply(--layout-end-justified);
+          padding: 0 10px;
+        }
       }
       .grid-container {
         @apply(--layout-flex);
@@ -41,18 +47,12 @@ Copyright © HatioLab Inc. All rights reserved.
         height: 50px;
         @apply(--things-tight-padding);
       }
-      paper-toolbar::shadow #bottomBar {
-        height: 50px;
-        @apply(--layout-horizontal);
-        @apply(--layout-end-justified);
-        padding: 0 10px;
-      }
     </style>
   
     <div class="grid-container">
       <!-- grid -->
       <!--div id="{{gridContainerId}}" class="grid" on-mouseout="_onMouseout"></div-->
-      <div id="{{gridContainerId}}" class="grid"></div>
+      <!-- <div id="{{gridContainerId}}" class="grid"></div> -->
       <!-- paginator -->
       <div id="paginator-container" hidden$="[[!paginatable]]"></div-->
     </div>
