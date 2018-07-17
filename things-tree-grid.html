@@ -31,13 +31,16 @@ Copyright © HatioLab Inc. All rights reserved.
       .grid-container {
         @apply(--layout-flex);
         @apply(--layout-vertical);
+        @apply(--things-grid-container);
       }
       .grid {
         @apply(--layout-flex);
         @apply(--layout-vertical);
+        @apply(--things-grid-view);
       }
       .grid::shadow div {
         @apply(--layout-flex);
+        @apply(--things-grid-pageinator-container);
       }
       #paginator-container {
         height: 30px;
@@ -45,7 +48,6 @@ Copyright © HatioLab Inc. All rights reserved.
       paper-toolbar {
         background-color:var(--things-white-background-color);
         height: 50px;
-        @apply(--things-tight-padding);
       }
     </style>
   
