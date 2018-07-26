@@ -60,12 +60,12 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
 -->
 
 <dom-module id="things-resource-grid">
-  <template>
+    <template>
     <style>
       :host {
         display: block;
+        padding: 7px 7px 0 7px;
         @apply(--layout-vertical);
-        @apply(--things-table-padding);
       }
       .grid-container {
         @apply(--layout-flex);
@@ -109,60 +109,64 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
     </paper-toolbar>
   </template>
 
-  <script>
-    Polymer({
-      is: 'things-resource-grid',
+    <script>
+        Polymer({
+            is: 'things-resource-grid',
 
-      behaviors: [
-        Things.GridConfigBehavior,
-        Things.GridPaginationBehavior,
-        Things.GridImportBehavior,
-        Things.GridExportBehavior,
-        Things.GridAddrowBehavior,
-        Things.GridSoftDeleterowBehavior,
-        Things.GridSaveBehavior,
-        Things.GridPrintBehavior,
-        Things.GridOpenImportBehavior,
-        Things.GridRequestReleaseBehavior,
-      ],
-  
-      listeners: {
-        'things-grid-configure-failed' : '_gridConfigureFailed'
-      },
+            behaviors: [
+                Things.GridConfigBehavior,
+                Things.GridPaginationBehavior,
+                Things.GridImportBehavior,
+                Things.GridExportBehavior,
+                Things.GridAddrowBehavior,
+                Things.GridSoftDeleterowBehavior,
+                Things.GridSaveBehavior,
+                Things.GridPrintBehavior,
+                Things.GridOpenImportBehavior,
+                Things.GridRequestReleaseBehavior,
+            ],
 
-      observers: [
-        '_toolbarConfigChanged(buttons)'
-      ],
-      
-      /**
-       * 툴바 관련 설정 변경시 
-       *
-       * @param {Array} buttons
-       */
-      _toolbarConfigChanged: function(buttons) {
-        this.enableToolbar = buttons && buttons.length > 0;
-      },
+            listeners: {
+                'things-grid-configure-failed': '_gridConfigureFailed'
+            },
 
-      /**
-       * Grid 구성이 실패한 후 핸들러
-       * 
-       * @param {Object} event things-grid-configure-failed
-       */
-      _gridConfigureFailed: function(event) {
-        var title = Things.DataGlobal.t('text.grid_config_error');
-        var text = event.detail.error;
-        this.openInfoMsg({ type : 'error', title : title, text : text });
-      },
+            observers: [
+                '_toolbarConfigChanged(buttons)'
+            ],
 
-      /**
-       * Grid Container에서 Focus가 벗어난 경우
-       *
-       * @param {Object} event on-mouse-out 이벤트 
-       */
-      /*_onMouseout: function (event) {
-        if(this.grid)
-          this.grid.commit();
-      }*/
-    });
-  </script>
+            /**
+             * 툴바 관련 설정 변경시 
+             *
+             * @param {Array} buttons
+             */
+            _toolbarConfigChanged: function(buttons) {
+                this.enableToolbar = buttons && buttons.length > 0;
+            },
+
+            /**
+             * Grid 구성이 실패한 후 핸들러
+             * 
+             * @param {Object} event things-grid-configure-failed
+             */
+            _gridConfigureFailed: function(event) {
+                var title = Things.DataGlobal.t('text.grid_config_error');
+                var text = event.detail.error;
+                this.openInfoMsg({
+                    type: 'error',
+                    title: title,
+                    text: text
+                });
+            },
+
+            /**
+             * Grid Container에서 Focus가 벗어난 경우
+             *
+             * @param {Object} event on-mouse-out 이벤트 
+             */
+            /*_onMouseout: function (event) {
+              if(this.grid)
+                this.grid.commit();
+            }*/
+        });
+    </script>
 </dom-module>
