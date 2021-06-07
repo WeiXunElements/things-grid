@@ -1,194 +1,186 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes" />
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <title>things-diy-grid demo</title>
 
-  <title>things-diy-grid demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../../things-libraries/things-libraries.html" />
+    <script src="things-lic.js"></script>
+    <script src="../../things-license-checker-min/things-license-checker.min.js"></script>
 
-  <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
-  <link rel="import" href="../../things-libraries/things-libraries.html">
-  <script src="things-lic.js"></script>
-  <script src="../../things-license-checker-min/things-license-checker.min.js"></script>
+    <link rel="import" href="../../polymer/polymer.html" />
+    <link rel="import" href="../../paper-button/paper-button.html" />
+    <link rel="import" href="../../paper-styles/color.html" />
+    <link rel="import" href="../../paper-styles/demo-pages.html" />
+    <link rel="import" href="../../paper-toast/paper-toast.html" />
 
-    <link rel="import" href="../../polymer/polymer.html">
-  <link rel="import" href="../../paper-button/paper-button.html">
-  <link rel="import" href="../../paper-styles/color.html">
-  <link rel="import" href="../../paper-styles/demo-pages.html">
-  <link rel="import" href="../../paper-toast/paper-toast.html">
+    <link rel="import" href="../../things-ajax/things-ajax.html" />
+    <link rel="import" href="../../things-button/things-button.html" />
+    <link rel="import" href="../../things-spinner/things-spinner.html" />
+    <link rel="import" href="../../things-setting/things-setting.html" />
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html" />
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html" />
+    <link rel="import" href="../things-diy-grid.html" />
 
-    <link rel="import" href="../../things-ajax/things-ajax.html">
-  <link rel="import" href="../../things-button/things-button.html">
-  <link rel="import" href="../../things-spinner/things-spinner.html">
-  <link rel="import" href="../../things-setting/things-setting.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-  <link rel="import" href="../things-diy-grid.html">
+    <link rel="stylesheet" href="../../paper-styles/demo.css" />
 
-  <link rel="stylesheet" href="../../paper-styles/demo.css">
+    <style is="custom-style">
+      .output {
+        margin-top: 20px;
+        word-wrap: break-word;
+        @apply (--paper-font-common-code);
+      }
 
-  <style is="custom-style">
+      form > paper-button {
+        width: 45%;
+        margin-top: 20px;
+      }
 
-    .output {
-      margin-top: 20px;
-      word-wrap: break-word;
-      @apply(--paper-font-common-code);
-    }
+      form > paper-button:not([disabled]) {
+        background: var(--paper-light-blue-500);
+        color: white;
+      }
 
-    form > paper-button {
-      width: 45%;
-      margin-top: 20px;
-    }
+      button {
+        margin-top: 20px;
+      }
 
-        form > paper-button:not([disabled]) {
-      background: var(--paper-light-blue-500);
-      color: white;
-    }
+      paper-spinner {
+        width: 14px;
+        height: 14px;
+        margin-right: 20px;
+      }
 
-        button {
-      margin-top: 20px;
-    }
+      paper-dropdown-menu {
+        display: block;
+      }
 
-        paper-spinner {
-      width: 14px;
-      height: 14px;
-      margin-right: 20px;
-    }
+      demo-snippet {
+        --demo-snippet-code: {
+          max-height: 300px;
+        }
+      }
+    </style>
+  </head>
 
-        paper-dropdown-menu {
-      display: block;
-    }
+  <body unresolved>
+    <demo-snippet class="centered-demo">
+      <template id="app">
+        <dom-module id="sample-diy-grid">
+          <template>
+            <things-button color="green" id="search-meta">Search Grid Meta</things-button>
+            <things-button color="green" id="search-data">Search Data</things-button>
 
-        demo-snippet {
-      --demo-snippet-code: {
-        max-height: 300px;
-      };
-    }
+            <paper-input type="text" label="Input Grid Meta URL" value="{{metaId::change}}"></paper-input>
+            <paper-input type="text" label="Input Service URL" value="{{customServiceUrl::change}}"></paper-input>
+            <paper-input type="number" min="1" label="Current Page" value="{{page}}"></paper-input>
+            <paper-input type="text" label="Page Limit" value="{{limit::change}}"></paper-input>
 
-  </style>
+            <section>
+              <things-diy-grid
+                id="grid"
+                grid-image-dir="../../grid/assets"
+                diy-grid-id="{{metaId}}"
+                data="[[gridData.items]]"
+              >
+              </things-diy-grid>
 
-</head>
+              <things-ajax
+                id="search-resource"
+                method="POST"
+                content-type="application/json"
+                resource-url="{{customServiceUrl}}"
+                last-response="{{gridData}}"
+              >
+              </things-ajax>
+            </section>
+          </template>
 
-<body unresolved>
-  <demo-snippet class="centered-demo">
-  <template id="app">
-    <dom-module id="sample-diy-grid">
-      <template>
-        <things-button color="green" id="search-meta">Search Grid Meta</things-button>
-        <things-button color="green" id="search-data">Search Data</things-button>
+          <script>
+            Polymer({
+              is: 'sample-diy-grid',
 
-                <paper-input type="text" label="Input Grid Meta URL" value="{{metaId::change}}"></paper-input>
-        <paper-input type="text" label="Input Service URL" value="{{customServiceUrl::change}}"></paper-input>
-        <paper-input type="number" min=1 label="Current Page" value="{{page}}"></paper-input>
-        <paper-input type="text" label="Page Limit" value="{{limit::change}}"></paper-input>
+              properties: {
+                page: {
+                  type: Number,
+                  value: 1,
+                },
 
-        <section>
-          <things-diy-grid 
-            id="grid"
-            grid-image-dir="../../grid/assets"
-            diy-grid-id="{{metaId}}"
-            data="[[gridData.items]]">
-          </things-diy-grid>
+                limit: {
+                  type: Number,
+                  value: 50,
+                },
 
-                            <things-ajax 
-            id="search-resource"
-            method="POST"
-            content-type="application/json"
-            resource-url="{{customServiceUrl}}"
-            last-response="{{gridData}}">
-          </things-ajax>
-        </section>
+                metaId: {
+                  type: String,
+                  value: '2',
+                },
+
+                customServiceUrl: {
+                  type: String,
+                  value: 'diy_services/DynamicScreen/shoot.json',
+                },
+              },
+
+              listeners: {
+                'search-data.tap': 'searchData',
+                'search-meta.tap': 'searchMeta',
+              },
+
+              observers: ['paginationChange(page, limit)'],
+
+              paginationChange: function (page, limit) {
+                var grid = this.$.grid;
+                if (grid.data && grid.data.length > 0) {
+                  this.searchData();
+                }
+              },
+
+              searchData: function (e) {
+                var grid = this.$.grid;
+                var resource = this.$['search-resource'];
+                resource.body = { input: { page: this.page, limit: this.limit } };
+                resource.generateRequest();
+              },
+
+              searchMeta: function (e) {
+                this.$.grid.clearGrid();
+                this.$.grid.refreshMeta();
+              },
+            });
+          </script>
+        </dom-module>
+
+        <template is="dom-bind" id="content">
+          <things-setting id="setting"></things-setting>
+
+          <section>
+            <h4>Things diy Grid</h4>
+            <sample-diy-grid></sample-diy-grid>
+          </section>
+
+          <things-spinner id="spinner" loading="false"></things-spinner>
+          <paper-toast id="toast" class="Toast" duration="8000"></paper-toast>
+          <script type="text/javascript">
+            var app = document.querySelector('#content');
+            var setting = document.querySelector('#setting');
+
+            window.addEventListener('WebComponentsReady', function () {
+              if (setting) {
+                setting.set('globals.baseUrl', 'http://localhost:8080/components/things-grid/demo/data');
+              }
+            });
+          </script>
+        </template>
       </template>
-
-      <script>
-        Polymer({
-
-          is: 'sample-diy-grid',
-
-          properties: {
-
-                        page: {
-              type: Number,
-              value: 1
-            },
-
-                        limit: {
-              type: Number,
-              value: 50
-            },
-
-            metaId: {
-              type: String,
-              value: '2'
-            },
-
-            customServiceUrl: {
-              type: String,
-              value: 'diy_services/DynamicScreen/shoot.json'
-            }
-          },
-
-          listeners: {
-            'search-data.tap': 'searchData',
-            'search-meta.tap': 'searchMeta'
-          },
-
-          observers: [
-            'paginationChange(page, limit)'
-          ],
-
-          paginationChange: function(page, limit) {
-            var grid = this.$.grid;
-            if(grid.data && grid.data.length > 0) {
-              this.searchData();
-            }
-          },
-
-          searchData: function(e) {
-            var grid = this.$.grid;
-            var resource = this.$['search-resource'];
-            resource.body = { input : { page : this.page, limit : this.limit } };
-            resource.generateRequest();
-          },
-
-          searchMeta: function(e){
-            this.$.grid.clearGrid();
-            this.$.grid.refreshMeta();
-          }
-
-        });
-      </script>
-    </dom-module>
-
-    <template is="dom-bind" id="content">
-      <things-setting id="setting"></things-setting>
-
-      <section>
-        <h4>Things diy Grid</h4>
-        <sample-diy-grid></sample-diy-grid>
-      </section>
-
-      <things-spinner id="spinner" loading=false></things-spinner>
-      <paper-toast id="toast" class="Toast" duration="8000"></paper-toast>
-      <script type="text/javascript">
-        var app = document.querySelector('#content');
-        var setting = document.querySelector('#setting');
-
-        window.addEventListener('WebComponentsReady', function() {
-            if (setting){
-              setting.set('globals.baseUrl', 'http://localhost:8080/components/things-grid/demo/data');
-            }
-        });
-      </script>  
-    </template>
-  </template>
-  </demo-snippet>
-
-</body>
+    </demo-snippet>
+  </body>
 </html>

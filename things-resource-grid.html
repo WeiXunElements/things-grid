@@ -1,22 +1,22 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="../paper-toolbar/paper-toolbar.html" />
 
-<link rel="import" href="../things-button/things-button-group.html">
-<link rel="import" href="../things-button/things-button-bar.html">
-<link rel="import" href="../things-grid-behavior/things-grid-config-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-pagination-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-export-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-import-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-addrow-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-soft-deleterow-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-save-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-print-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-open-import-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-request-release-behavior.html">
+<link rel="import" href="../things-button/things-button-group.html" />
+<link rel="import" href="../things-button/things-button-bar.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-config-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-pagination-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-export-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-import-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-addrow-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-soft-deleterow-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-save-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-print-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-open-import-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-request-release-behavior.html" />
 <!--
 기본 라소스 그리드. 
 Pagination을 지원하고 import, export, add, delete, save가 가능한 그리드
@@ -60,35 +60,35 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
 -->
 
 <dom-module id="things-resource-grid">
-    <template>
+  <template>
     <style>
       :host {
         display: block;
         padding: 7px 7px 0 7px;
-        @apply(--layout-vertical);
+        @apply (--layout-vertical);
       }
       .grid-container {
-        @apply(--layout-flex);
-        @apply(--layout-vertical);
+        @apply (--layout-flex);
+        @apply (--layout-vertical);
       }
       .grid {
-        @apply(--layout-flex);
-        @apply(--layout-vertical);
+        @apply (--layout-flex);
+        @apply (--layout-vertical);
       }
       .grid::shadow div {
-        @apply(--layout-flex);
+        @apply (--layout-flex);
       }
       #paginator-container {
         height: 30px;
       }
       paper-toolbar {
-        background-color:var(--things-white-background-color);
+        background-color: var(--things-white-background-color);
         height: 50px;
       }
       paper-toolbar::shadow #bottomBar {
         height: 50px;
-        @apply(--layout-horizontal);
-        @apply(--layout-end-justified);
+        @apply (--layout-horizontal);
+        @apply (--layout-end-justified);
         padding: 0 10px;
       }
     </style>
@@ -100,7 +100,7 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
       <!-- paginator -->
       <div id="paginator-container" hidden$="[[!showPaginator]]"></div>
     </div>
-  
+
     <paper-toolbar hidden$="{{!enableToolbar}}">
       <!-- button group -->
       <div class="bottom">
@@ -109,64 +109,62 @@ Things.ResourceGridBehavior에 필요한 모든 구현이 포함되어 있다.
     </paper-toolbar>
   </template>
 
-    <script>
-        Polymer({
-            is: 'things-resource-grid',
+  <script>
+    Polymer({
+      is: 'things-resource-grid',
 
-            behaviors: [
-                Things.GridConfigBehavior,
-                Things.GridPaginationBehavior,
-                Things.GridImportBehavior,
-                Things.GridExportBehavior,
-                Things.GridAddrowBehavior,
-                Things.GridSoftDeleterowBehavior,
-                Things.GridSaveBehavior,
-                Things.GridPrintBehavior,
-                Things.GridOpenImportBehavior,
-                Things.GridRequestReleaseBehavior,
-            ],
+      behaviors: [
+        Things.GridConfigBehavior,
+        Things.GridPaginationBehavior,
+        Things.GridImportBehavior,
+        Things.GridExportBehavior,
+        Things.GridAddrowBehavior,
+        Things.GridSoftDeleterowBehavior,
+        Things.GridSaveBehavior,
+        Things.GridPrintBehavior,
+        Things.GridOpenImportBehavior,
+        Things.GridRequestReleaseBehavior,
+      ],
 
-            listeners: {
-                'things-grid-configure-failed': '_gridConfigureFailed'
-            },
+      listeners: {
+        'things-grid-configure-failed': '_gridConfigureFailed',
+      },
 
-            observers: [
-                '_toolbarConfigChanged(buttons)'
-            ],
+      observers: ['_toolbarConfigChanged(buttons)'],
 
-            /**
-             * 툴바 관련 설정 변경시 
-             *
-             * @param {Array} buttons
-             */
-            _toolbarConfigChanged: function(buttons) {
-                this.enableToolbar = buttons && buttons.length > 0;
-            },
+      /**
+       * 툴바 관련 설정 변경시
+       *
+       * @param {Array} buttons
+       */
+      _toolbarConfigChanged: function (buttons) {
+        this.enableToolbar = buttons && buttons.length > 0;
+      },
 
-            /**
-             * Grid 구성이 실패한 후 핸들러
-             * 
-             * @param {Object} event things-grid-configure-failed
-             */
-            _gridConfigureFailed: function(event) {
-                var title = Things.DataGlobal.t('text.grid_config_error');
-                var text = event.detail.error;
-                this.openInfoMsg({
-                    type: 'error',
-                    title: title,
-                    text: text
-                });
-            },
+      /**
+       * Grid 구성이 실패한 후 핸들러
+       *
+       * @param {Object} event things-grid-configure-failed
+       */
+      _gridConfigureFailed: function (event) {
+        var title = Things.DataGlobal.t('text.grid_config_error');
+        var text = event.detail.error;
+        this.openInfoMsg({
+          type: 'error',
+          title: title,
+          text: text,
+        });
+      },
 
-            /**
-             * Grid Container에서 Focus가 벗어난 경우
-             *
-             * @param {Object} event on-mouse-out 이벤트 
-             */
-            /*_onMouseout: function (event) {
+      /**
+       * Grid Container에서 Focus가 벗어난 경우
+       *
+       * @param {Object} event on-mouse-out 이벤트
+       */
+      /*_onMouseout: function (event) {
               if(this.grid)
                 this.grid.commit();
             }*/
-        });
-    </script>
+    });
+  </script>
 </dom-module>

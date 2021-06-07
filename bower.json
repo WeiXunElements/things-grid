@@ -1,8 +1,8 @@
 {
     "name": "things-grid",
-    "version": "v2.2.3",
+    "version": "v2.2.4",
     "authors": [
-        "Hatio Lab. <heartyoh@hatiolab.com>"
+        "Shenzhen Weixun"
     ],
     "description": "Elements for providing dataludi grid.",
     "keywords": [
@@ -13,8 +13,6 @@
     "main": [
         "elements.html"
     ],
-    "license": "http://license.hatiolab.com/EULA",
-    "homepage": "http://elements.hatiolab.com/",
     "ignore": [
         "/.*",
         "/test/"

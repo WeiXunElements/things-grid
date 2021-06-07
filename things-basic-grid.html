@@ -1,20 +1,20 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="../paper-toolbar/paper-toolbar.html" />
 
-<link rel="import" href="../things-button/things-button-group.html">
-<link rel="import" href="../things-button/things-button-bar.html">
+<link rel="import" href="../things-button/things-button-group.html" />
+<link rel="import" href="../things-button/things-button-bar.html" />
 
-<link rel="import" href="../things-grid-behavior/things-grid-config-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-pagination-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-export-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-import-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-addrow-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-soft-deleterow-behavior.html">
-<link rel="import" href="../things-grid-behavior/things-grid-save-behavior.html">
+<link rel="import" href="../things-grid-behavior/things-grid-config-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-pagination-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-export-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-import-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-addrow-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-soft-deleterow-behavior.html" />
+<link rel="import" href="../things-grid-behavior/things-grid-save-behavior.html" />
 
 <!--
 기본 그리드. 기본 리소스 그리드는 기본 GridBehavior(Things.GridConfigBehavior)만 
@@ -58,84 +58,79 @@ mixin 하고 있어서 그리드에 데이터만 표시하는데 사용된다.
     <style>
       :host {
         display: block;
-        @apply(--layout-vertical);
-        @apply(--things-table-padding);
+        @apply (--layout-vertical);
+        @apply (--things-table-padding);
       }
       .grid-container {
-        @apply(--layout-flex);
-        @apply(--layout-vertical);
+        @apply (--layout-flex);
+        @apply (--layout-vertical);
       }
       .grid {
-        @apply(--layout-flex);
-        @apply(--layout-vertical);
+        @apply (--layout-flex);
+        @apply (--layout-vertical);
       }
       .grid::shadow div {
-        @apply(--layout-flex);
+        @apply (--layout-flex);
       }
       #paginator-container {
         height: 30px;
       }
       paper-toolbar {
-        background-color:var(--things-white-background-color);
+        background-color: var(--things-white-background-color);
         height: 50px;
-        @apply(--things-tight-padding);
+        @apply (--things-tight-padding);
       }
       paper-toolbar::shadow #bottomBar {
         height: 50px;
-        @apply(--layout-horizontal);
-        @apply(--layout-end-justified);
+        @apply (--layout-horizontal);
+        @apply (--layout-end-justified);
         padding: 0 10px;
       }
     </style>
 
     <div class="grid-container">
-    	<!-- grid -->
+      <!-- grid -->
       <div id="{{gridContainerId}}" class="grid" on-mouseout="_onMouseout"></div>
       <!-- paginator -->
       <div id="paginator-container" hidden$="[[!showPaginator]]"></div>
     </div>
-  
+
     <paper-toolbar hidden$="{{!enableToolbar}}">
       <!-- button group -->
-      <div class="bottom">          
+      <div class="bottom">
         <things-button-bar id="button-group" buttons="[[buttons]]"></things-button-bar>
       </div>
     </paper-toolbar>
   </template>
 
-	<script>
-		Polymer({
-			is: 'things-basic-grid',
+  <script>
+    Polymer({
+      is: 'things-basic-grid',
 
-			behaviors: [
-				Things.GridConfigBehavior,
-				Things.GridPaginationBehavior
-			],
-	
-			properties: {
-				/**
-			   * Button Group에 표시될 버튼 정보
-			   */
-				buttons : {
-					type: Array,
-					value: function() {
-						return [];
-					}
-				}
-			},
+      behaviors: [Things.GridConfigBehavior, Things.GridPaginationBehavior],
 
-			listeners: {
-				'things-grid-configure-failed' : '_gridConfigureFailed'
-			},
+      properties: {
+        /**
+         * Button Group에 표시될 버튼 정보
+         */
+        buttons: {
+          type: Array,
+          value: function () {
+            return [];
+          },
+        },
+      },
 
-			observers: [
-				'_toolbarConfigChanged(buttons)'
-			],
+      listeners: {
+        'things-grid-configure-failed': '_gridConfigureFailed',
+      },
 
-			/**
-			 * Life Cycle 
-			 */
-			/*_buttonsChanged: function() {
+      observers: ['_toolbarConfigChanged(buttons)'],
+
+      /**
+       * Life Cycle
+       */
+      /*_buttonsChanged: function() {
 				if(this.paginatable) {
 					this.behaviors.push(Things.GridPaginationBehavior);
 					this._mixinBehavior(Things.GridPaginationBehavior);
@@ -176,36 +171,34 @@ mixin 하고 있어서 그리드에 데이터만 표시하는데 사용된다.
 				}
 			},*/
 
-			/**
-			 * 툴바 관련 설정 변경시 
-			 *
-			 * @param {Array} buttons
-			 */
-			_toolbarConfigChanged: function(buttons) {
-				this.enableToolbar = buttons && buttons.length > 0;
-			},
+      /**
+       * 툴바 관련 설정 변경시
+       *
+       * @param {Array} buttons
+       */
+      _toolbarConfigChanged: function (buttons) {
+        this.enableToolbar = buttons && buttons.length > 0;
+      },
 
-			/**
-			 * Grid 구성이 실패한 후 핸들러
-			 * 
-			 * @param {Object} event things-grid-configure-failed
-			 */
-			_gridConfigureFailed: function(event) {
-				var title = 'Grid Configuration Error';
-				var text = 'Error : ' + event.detail.error;
-				this.openInfoMsg({ type : 'error', title : title, text : text });
-			},
-			
-			/**
-			 * Grid Container에서 Focus가 벗어난 경우
-			 *
-			 * @param {Object} event on-mouse-out 이벤트 
-			 */
-			_onMouseout: function (event) {
-				if(this.grid)
-					this.grid.commit();
-			}
+      /**
+       * Grid 구성이 실패한 후 핸들러
+       *
+       * @param {Object} event things-grid-configure-failed
+       */
+      _gridConfigureFailed: function (event) {
+        var title = 'Grid Configuration Error';
+        var text = 'Error : ' + event.detail.error;
+        this.openInfoMsg({ type: 'error', title: title, text: text });
+      },
 
-		});
-	</script>
+      /**
+       * Grid Container에서 Focus가 벗어난 경우
+       *
+       * @param {Object} event on-mouse-out 이벤트
+       */
+      _onMouseout: function (event) {
+        if (this.grid) this.grid.commit();
+      },
+    });
+  </script>
 </dom-module>

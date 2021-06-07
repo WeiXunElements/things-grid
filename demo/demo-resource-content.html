@@ -1,205 +1,200 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
 <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
-<link rel="import" href="../../things-libraries/things-libraries.html">
+<link rel="import" href="../../things-libraries/things-libraries.html" />
 <script src="things-lic.js"></script>
 <script src="../../things-license-checker-min/things-license-checker.min.js"></script>
-<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../polymer/polymer.html" />
 
-<link rel="import" href="../../iron-icon/iron-icon.html">
-<link rel="import" href="../../iron-icons/iron-icons.html">
-<link rel="import" href="../../iron-icons/social-icons.html">
-<link rel="import" href="../../iron-icons/maps-icons.html">
-<link rel="import" href="../../iron-iconset/iron-iconset.html">
-<link rel="import" href="../../iron-iconset-svg/iron-iconset-svg.html">
-<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../iron-icon/iron-icon.html" />
+<link rel="import" href="../../iron-icons/iron-icons.html" />
+<link rel="import" href="../../iron-icons/social-icons.html" />
+<link rel="import" href="../../iron-icons/maps-icons.html" />
+<link rel="import" href="../../iron-iconset/iron-iconset.html" />
+<link rel="import" href="../../iron-iconset-svg/iron-iconset-svg.html" />
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html" />
 
-<link rel="import" href="../../things-ajax/things-ajax.html">
-<link rel="import" href="../../things-button/things-button.html">
-<link rel="import" href="../../things-form/things-resource-form.html">
-<link rel="import" href="../../things-form/things-search-form.html">
+<link rel="import" href="../../things-ajax/things-ajax.html" />
+<link rel="import" href="../../things-button/things-button.html" />
+<link rel="import" href="../../things-form/things-resource-form.html" />
+<link rel="import" href="../../things-form/things-search-form.html" />
 
-<link rel="import" href="../../things-meta/things-entity-meta-behavior.html">
-<link rel="import" href="../../things-route-content-behavior/things-route-content-behavior.html">
+<link rel="import" href="../../things-meta/things-entity-meta-behavior.html" />
+<link rel="import" href="../../things-route-content-behavior/things-route-content-behavior.html" />
 
-<link rel="import" href="../things-resource-grid.html">
+<link rel="import" href="../things-resource-grid.html" />
 
 <dom-module id="demo-resource-content">
-	<template>
-		<style>
-			:host {
-				display: block;
-				height: 100%;
-			}
-		</style>
+  <template>
+    <style>
+      :host {
+        display: block;
+        height: 100%;
+      }
+    </style>
 
-		<div class="[[layout]]">
-			<things-ajax 
-				id="resources-meta"
-				method="GET"
-				resource-url="[[resourceMetaUrl]]"
-				last-response="{{metaData}}">
-			</things-ajax>
+    <div class="[[layout]]">
+      <things-ajax id="resources-meta" method="GET" resource-url="[[resourceMetaUrl]]" last-response="{{metaData}}">
+      </things-ajax>
 
-			<things-search-form 
-				id="search-form"
-				class="flex"
-				active="[[active]]"
-				title="[[title]]"
-				form-fields="[[searchFormFields]]" 
-				action-url="[[resourceUrl]]" 
-				page="{{page}}"
-				limit="[[limit]]"
-				last-response="{{lastResponse}}">
-			</things-search-form>
+      <things-search-form
+        id="search-form"
+        class="flex"
+        active="[[active]]"
+        title="[[title]]"
+        form-fields="[[searchFormFields]]"
+        action-url="[[resourceUrl]]"
+        page="{{page}}"
+        limit="[[limit]]"
+        last-response="{{lastResponse}}"
+      >
+      </things-search-form>
 
-			<things-resource-grid 
-				id="grid"
-				model="[[gridModel]]" 
-				columns="[[gridColumns]]"
-				data="[[lastResponse.items]]"
-				total-count ="[[lastResponse.total]]"
-				current-page="{{page}}"
-				limit="{{limit}}"
-				grid-save-action="[[gridSaveUrl]]"
-				selected-row-data="{{selectedRow}}"
-				export-file-name="[[title]]"
-				export-sheet-name="[[title]]"
-				paginatable>
-			</things-resource-grid>
+      <things-resource-grid
+        id="grid"
+        model="[[gridModel]]"
+        columns="[[gridColumns]]"
+        data="[[lastResponse.items]]"
+        total-count="[[lastResponse.total]]"
+        current-page="{{page}}"
+        limit="{{limit}}"
+        grid-save-action="[[gridSaveUrl]]"
+        selected-row-data="{{selectedRow}}"
+        export-file-name="[[title]]"
+        export-sheet-name="[[title]]"
+        paginatable
+      >
+      </things-resource-grid>
 
-			<things-resource-form 
-				id="resource-form"
-				title="[[title]] Detail"
-				resource-url="[[memberResourceUrl]]"
-				form-fields="[[resourceFormFields]]" 
-				input="{{selectedRow}}">
-			</things-resource-form>
-		</div>
-	</template>
+      <things-resource-form
+        id="resource-form"
+        title="[[title]] Detail"
+        resource-url="[[memberResourceUrl]]"
+        form-fields="[[resourceFormFields]]"
+        input="{{selectedRow}}"
+      >
+      </things-resource-form>
+    </div>
+  </template>
 
-	<script>
-		Polymer({
-			is: 'demo-resource-content',
+  <script>
+    Polymer({
+      is: 'demo-resource-content',
 
-			behaviors: [ 
-				Things.EntityMetaBehavior,
-				Things.RouteContentBehavior
-			],
+      behaviors: [Things.EntityMetaBehavior, Things.RouteContentBehavior],
 
-						properties: {
-				/**
-				 * Screen layout
-				 */
-				layout: {
-					type: String
-				},
+      properties: {
+        /**
+         * Screen layout
+         */
+        layout: {
+          type: String,
+        },
 
-				/**
-				 * 화면 타이틀 
-				 */
-				title: {
-					type: String
-				},
+        /**
+         * 화면 타이틀
+         */
+        title: {
+          type: String,
+        },
 
-				/**
-				 * 그리드 저장 (Multiple Save) URL
-				 */
-				gridSaveUrl: {
-					type: String,
-					computed: '_computeGridSaveUrl(resourceUrl)'
-				},
+        /**
+         * 그리드 저장 (Multiple Save) URL
+         */
+        gridSaveUrl: {
+          type: String,
+          computed: '_computeGridSaveUrl(resourceUrl)',
+        },
 
-				/**
-				 * Search Form에서 검색 결과 Object 중에서 List를 나타내는 프로퍼티 
-				 * 검색 폼 프로퍼티와 그리드 프로퍼티의 연결 프로퍼티 
-				 */
-				rootProperty: {
-					type: String,
-					value: 'items'
-				},
+        /**
+         * Search Form에서 검색 결과 Object 중에서 List를 나타내는 프로퍼티
+         * 검색 폼 프로퍼티와 그리드 프로퍼티의 연결 프로퍼티
+         */
+        rootProperty: {
+          type: String,
+          value: 'items',
+        },
 
-				/**
-				 * Search Form에서 검색 결과 Object 중에서 Total을 나타내는 프로퍼티 
-				 * 검색 폼 프로퍼티와 그리드 프로퍼티의 연결 프로퍼티 
-				 */
-				totalProperty: {
-					type: String,
-					value: 'total'
-				},
+        /**
+         * Search Form에서 검색 결과 Object 중에서 Total을 나타내는 프로퍼티
+         * 검색 폼 프로퍼티와 그리드 프로퍼티의 연결 프로퍼티
+         */
+        totalProperty: {
+          type: String,
+          value: 'total',
+        },
 
-				/**
-				 * 그리드에서 선택된 Row Data
-				 */
-				selectedRow: {
-					type: Object
-				},
+        /**
+         * 그리드에서 선택된 Row Data
+         */
+        selectedRow: {
+          type: Object,
+        },
 
-				/**
-				 * Get/Update/Delete 등을 위한 {resourceUrl}/:id 형식 URL
-				 */
-				memberResourceUrl: {
-					type: String,
-					computed: '_computeMemberResourceUrl(resourceUrl)'
-				}
-			},
+        /**
+         * Get/Update/Delete 등을 위한 {resourceUrl}/:id 형식 URL
+         */
+        memberResourceUrl: {
+          type: String,
+          computed: '_computeMemberResourceUrl(resourceUrl)',
+        },
+      },
 
-			listeners : {
-				'grid.things-grid-detail-tap': '_showResourceForm',
-				'grid.things-grid-save-success': '_refreshGridData',
-				'resource-form.things-resource-form-saved' : '_refreshGridData'
-			},
+      listeners: {
+        'grid.things-grid-detail-tap': '_showResourceForm',
+        'grid.things-grid-save-success': '_refreshGridData',
+        'resource-form.things-resource-form-saved': '_refreshGridData',
+      },
 
-			/**
-			 * resourceUrl로 grid save url을 생성
-			 * @param {String} resourceUrl
-			 * @return {String} grid save URL
-			 */
-			_computeGridSaveUrl: function(resourceUrl) {
-				return resourceUrl + '/update_multiple.json';
-			},
+      /**
+       * resourceUrl로 grid save url을 생성
+       * @param {String} resourceUrl
+       * @return {String} grid save URL
+       */
+      _computeGridSaveUrl: function (resourceUrl) {
+        return resourceUrl + '/update_multiple.json';
+      },
 
-			/**
-			 * resourceUrl로 grid save url을 생성
-			 * @param {String} resourceUrl
-			 * @return {String} grid save URL
-			 */
-			_computeMemberResourceUrl: function(resourceUrl) {
-				return resourceUrl + '/:id';
-			},
+      /**
+       * resourceUrl로 grid save url을 생성
+       * @param {String} resourceUrl
+       * @return {String} grid save URL
+       */
+      _computeMemberResourceUrl: function (resourceUrl) {
+        return resourceUrl + '/:id';
+      },
 
-			/**
-			 * open resource form dialog
-			 * @param event 그리드에서 선택된 event
-			 */
-			_showResourceForm: function(event) {
-				this.$['resource-form'].openResourceForm(event.detail);
-			},
+      /**
+       * open resource form dialog
+       * @param event 그리드에서 선택된 event
+       */
+      _showResourceForm: function (event) {
+        this.$['resource-form'].openResourceForm(event.detail);
+      },
 
-			/**
-			 * research form
-			 */
-			_refreshGridData: function(grid) {
-				this.$['search-form'].getMyForm().submit();
-			},
+      /**
+       * research form
+       */
+      _refreshGridData: function (grid) {
+        this.$['search-form'].getMyForm().submit();
+      },
 
-			/**
-			 * 메뉴에 등록된 자신의 routing 정보를 리턴한다.
-			 */
-			getMyRoute: function() {
-				return this.resourceUrl;
-			},
+      /**
+       * 메뉴에 등록된 자신의 routing 정보를 리턴한다.
+       */
+      getMyRoute: function () {
+        return this.resourceUrl;
+      },
 
-			/**
-			 * 화면 초기화 함수 
-			 * 메타 데이터를 서버로 요청하여 화면을 구성한다.
-			 */
-			initializeContent: function() {
-				this.$['resources-meta'].generateRequest();
-			}
-
-		});
-	</script>
+      /**
+       * 화면 초기화 함수
+       * 메타 데이터를 서버로 요청하여 화면을 구성한다.
+       */
+      initializeContent: function () {
+        this.$['resources-meta'].generateRequest();
+      },
+    });
+  </script>
 </dom-module>
