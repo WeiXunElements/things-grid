@@ -1,6 +1,6 @@
 {
     "name": "things-grid",
-    "version": "v2.2.4",
+    "version": "v2.2.5",
     "authors": [
         "Shenzhen Weixun"
     ],
@@ -22,8 +22,8 @@
         "paper-toolbar": "^1.1.4",
         "iron-resizable-behavior": "^1.0.3",
         "paper-material": "^1.0.6",
-        "things-grid-behavior": "ThingsElements/things-grid-behavior",
-        "things-button": "ThingsElements/things-button"
+        "things-grid-behavior": "WeiXunElements/things-grid-behavior",
+        "things-button": "WeiXunElements/things-button"
     },
     "devDependencies": {
         "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
@@ -37,9 +37,9 @@
         "paper-button": "^1.0.11",
         "paper-toast": "^1.2.2",
         "iron-demo-helpers": "^1.2.3",
-        "things-license-checker-min": "ThingsElements/things-license-checker-min#^2.5.0",
+        "things-license-checker-min": "WeiXunElements/things-license-checker-min#^2.5.0",
         "iron-signals": "^1.0.3",
         "paper-scroll-header-panel": "^2.0.0",
-        "things-elements": "ThingsElements/things-elements#master"
+        "things-elements": "WeiXunElements/things-elements#master"
     }
 }
